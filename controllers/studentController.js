@@ -139,7 +139,6 @@ exports.fetchSingleStudent = async (req, res) => {
     
 }
 
-//edit image - add new key
 exports.editStudent = async (req, res) => {
     console.log('editStudent', req.body);
     let db = getDB()

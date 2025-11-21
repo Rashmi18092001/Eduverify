@@ -7,8 +7,8 @@ module.exports = {
   },
   servers: [
     { 
-      url: 'http://10.13.181.115:3000', // Match your server port
-      description: 'Development server'
+      url: 'https://eduverify-topaz.onrender.com', 
+      description: 'Production server'
     }
   ],
   tags: [
@@ -529,19 +529,19 @@ module.exports = {
     '/v1/admin/fetch_single_institution': {
         get: {
             tags: ['Admin Management'],
-            summary: 'Fetch Single Institution',
+            summary: 'Fetch Single Institution With Students & Certificates',
             description:
-                'Retrieves complete details of a single institution, including its logo URL, students, their profile URLs, and associated certificates with PDF URLs.',
+                'Retrieves full institution details including logo URL, list of all students under that institution, and each student’s certificates with generated PDF URLs.',
 
             parameters: [
                 {
                     name: 'id',
                     in: 'query',
                     required: true,
-                    description: 'Institution ID to fetch details for',
+                    description: 'The ID of the institution to fetch',
                     schema: {
                         type: 'string',
-                        example: '691ac6c18ba874c77ec2d8b2'
+                        example: '6741a8b29f1c22380447da21'
                     }
                 }
             ],
@@ -561,9 +561,12 @@ module.exports = {
                                     },
                                     data: {
                                         type: 'object',
-                                        description: 'Institution details including students and certificates',
+                                        description: 'Institution details with students & certificates',
                                         properties: {
-                                            _id: { type: 'string', example: '691ac6c18ba874c77ec2d8b2' },
+                                            _id: {
+                                                type: 'string',
+                                                example: '6741a8b29f1c22380447da21'
+                                            },
                                             institutionName: {
                                                 type: 'string',
                                                 example: 'Oxford Public School'
@@ -574,57 +577,71 @@ module.exports = {
                                             },
                                             institution_logo: {
                                                 type: 'string',
-                                                example: 'logo_12345.png'
+                                                example: 'logo_152312.png'
                                             },
                                             logo_url: {
                                                 type: 'string',
-                                                example: 'https://yourdomain.com/logos/logo_12345.png'
+                                                example: 'https://yourdomain.com/logos/logo_152312.png'
                                             },
+
                                             student_data: {
                                                 type: 'array',
+                                                description: 'List of students with their certificates',
                                                 items: {
                                                     type: 'object',
                                                     properties: {
                                                         _id: {
                                                             type: 'string',
-                                                            example: '691ad7c18ba874c77ec2e001'
+                                                            example: '6741a9fc9f1c22380447dab2'
                                                         },
                                                         name: {
                                                             type: 'string',
-                                                            example: 'Rashmi Jadhav'
+                                                            example: 'John Doe'
+                                                        },
+                                                        email: {
+                                                            type: 'string',
+                                                            example: 'john.doe@gmail.com'
+                                                        },
+                                                        mobile: {
+                                                            type: 'string',
+                                                            example: '9876543210'
                                                         },
                                                         profile_picture: {
                                                             type: 'string',
-                                                            example: 'profile_885522.png'
+                                                            example: 'profile_99012.png'
                                                         },
                                                         profile_url: {
                                                             type: 'string',
                                                             example:
-                                                                'https://yourdomain.com/profile/profile_885522.png'
+                                                                'https://yourdomain.com/profiles/profile_99012.png'
                                                         },
+                                                        institution_id: {
+                                                            type: 'string',
+                                                            example: '6741a8b29f1c22380447da21'
+                                                        },
+
                                                         certifcates: {
                                                             type: 'array',
+                                                            description: 'Certificates belonging to the student',
                                                             items: {
                                                                 type: 'object',
                                                                 properties: {
                                                                     _id: {
                                                                         type: 'string',
-                                                                        example:
-                                                                            '691ae8c18ba874c77ec2fbb1'
+                                                                        example: '6841aa6b9f1c22380447ab91'
                                                                     },
-                                                                    course: {
+                                                                    course_id: {
                                                                         type: 'string',
-                                                                        example: 'MERN Fullstack'
+                                                                        example: '67239a0f57b122380473aa01'
                                                                     },
                                                                     pdf: {
                                                                         type: 'string',
-                                                                        example:
-                                                                            'Rashmi-MERN-certificate.pdf'
+                                                                        example: 'certificate_9981.pdf'
                                                                     },
                                                                     pdf_url: {
                                                                         type: 'string',
                                                                         example:
-                                                                            'https://yourdomain.com/generated/Rashmi-MERN-certificate.pdf'
+                                                                            'https://yourdomain.com/pdfs/certificate_9981.pdf'
                                                                     }
                                                                 }
                                                             }
@@ -633,38 +650,52 @@ module.exports = {
                                                 }
                                             }
                                         }
-                                    }
-                                },
+                                    },
 
-                                example: {
-                                    status: true,
-                                    message: 'Institution fetched successfully',
-                                    data: {
-                                        _id: '691ac6c18ba874c77ec2d8b2',
-                                        institutionName: 'Oxford Public School',
-                                        institutionCode: 'OXF123',
-                                        institution_logo: 'logo_12345.png',
-                                        logo_url: 'https://yourdomain.com/logos/logo_12345.png',
+                                    example: {
+                                        status: true,
+                                        message: 'Institution fetched successfully',
+                                        data: {
+                                            _id: '6741a8b29f1c22380447da21',
+                                            institutionName: 'Oxford Public School',
+                                            institutionCode: 'OXF123',
+                                            institution_logo: 'logo_152312.png',
+                                            logo_url: 'https://yourdomain.com/logos/logo_152312.png',
 
-                                        student_data: [
-                                            {
-                                                _id: '691ad7c18ba874c77ec2e001',
-                                                name: 'Rashmi Jadhav',
-                                                profile_picture: 'profile_885522.png',
-                                                profile_url:
-                                                    'https://yourdomain.com/profile/profile_885522.png',
+                                            student_data: [
+                                                {
+                                                    _id: '6741a9fc9f1c22380447dab2',
+                                                    name: 'John Doe',
+                                                    email: 'john.doe@gmail.com',
+                                                    mobile: '9876543210',
+                                                    profile_picture: 'profile_99012.png',
+                                                    profile_url:
+                                                        'https://yourdomain.com/profiles/profile_99012.png',
+                                                    institution_id: '6741a8b29f1c22380447da21',
 
-                                                certifcates: [
-                                                    {
-                                                        _id: '691ae8c18ba874c77ec2fbb1',
-                                                        course: 'MERN Fullstack',
-                                                        pdf: 'Rashmi-MERN-certificate.pdf',
-                                                        pdf_url:
-                                                            'https://yourdomain.com/generated/Rashmi-MERN-certificate.pdf'
-                                                    }
-                                                ]
-                                            }
-                                        ]
+                                                    certifcates: [
+                                                        {
+                                                            _id: '6841aa6b9f1c22380447ab91',
+                                                            course_id: '67239a0f57b122380473aa01',
+                                                            pdf: 'certificate_9981.pdf',
+                                                            pdf_url:
+                                                                'https://yourdomain.com/pdfs/certificate_9981.pdf'
+                                                        }
+                                                    ]
+                                                },
+
+                                                {
+                                                    _id: '6741aa6b9f1c22380447dad9',
+                                                    name: 'Priya Sharma',
+                                                    email: 'priya.sharma@gmail.com',
+                                                    mobile: '9898989898',
+                                                    profile_picture: '',
+                                                    profile_url: '',
+                                                    institution_id: '6741a8b29f1c22380447da21',
+                                                    certifcates: []
+                                                }
+                                            ]
+                                        }
                                     }
                                 }
                             }
@@ -1241,137 +1272,70 @@ module.exports = {
     '/v1/course/add_course': {
         post: {
             tags: ['Course Management'],
-            summary: 'Add Course',
+            summary: 'Add New Course',
             description:
-            'Adds a new course for a specific institution by storing institution_id and course name in the database.',
+                'Creates and stores a new course under a specific institution. Includes course name, price, duration, and languages.',
 
             requestBody: {
-            required: true,
-            content: {
-                'application/json': {
-                schema: {
-                    type: 'object',
-                    properties: {
-                    institution_id: {
-                        type: 'string',
-                        example: '691ac6c18ba874c77ec2d8b2',
-                        description: 'Institution ID to which the course belongs'
-                    },
-                    course: {
-                        type: 'string',
-                        example: 'B.Tech Computer Science',
-                        description: 'Course name to be added'
-                    }
-                    },
-                    required: ['institution_id', 'course']
-                }
-                }
-            }
-            },
-
-            responses: {
-            '200': {
-                description: 'Course added successfully',
+                required: true,
                 content: {
-                'application/json': {
-                    schema: {
-                    type: 'object',
-                    properties: {
-                        status: { type: 'boolean', example: true },
-                        message: { type: 'string', example: 'Course added successfully' }
-                    },
-                    example: {
-                        status: true,
-                        message: 'Course added successfully'
+                    'application/json': {
+                        schema: {
+                            type: 'object',
+                            properties: {
+                                institution_id: {
+                                    type: 'string',
+                                    example: '6741a8b29f1c22380447da21',
+                                    description: 'ID of the institution to which the course belongs'
+                                },
+                                name: {
+                                    type: 'string',
+                                    example: 'Full Stack Development',
+                                    description: 'Name of the course'
+                                },
+                                price: {
+                                    type: 'number',
+                                    example: 15000,
+                                    description: 'Course fee'
+                                },
+                                duration: {
+                                    type: 'string',
+                                    example: '3 Months',
+                                    description: 'Course duration'
+                                },
+                                languages: {
+                                    type: 'array',
+                                    example: ['Java', 'Python'],
+                                    items: { type: 'string' },
+                                    description: 'Languages available for this course'
+                                }
+                            },
+
+                            example: {
+                                institution_id: '6741a8b29f1c22380447da21',
+                                name: 'Full Stack Development',
+                                price: 15000,
+                                duration: '3 Months',
+                                languages: ['English', 'Hindi']
+                            }
+                        }
                     }
-                    }
-                }
                 }
             },
-
-            '500': {
-                description: 'Internal server error',
-                content: {
-                'application/json': {
-                    schema: {
-                    type: 'object',
-                    properties: {
-                        status: { type: 'boolean', example: false },
-                        message: { type: 'string', example: 'Internal server error' }
-                    }
-                    }
-                }
-                }
-            }
-            }
-        }
-    },
-    '/v1/course/fetch_all_course': {
-        get: {
-            tags: ['Course Management'],
-            summary: 'Fetch Courses',
-            description: 'Fetch all courses belonging to a specific institution. Returns a list of all courses stored under the provided institution_id.',
-
-            parameters: [
-                {
-                    name: 'institution_id',
-                    in: 'query',
-                    required: true,
-                    description: 'Institution ID whose courses need to be fetched',
-                    schema: {
-                        type: 'string',
-                        example: '691ac6c18ba874c77ec2d8b2'
-                    }
-                }
-            ],
 
             responses: {
                 '200': {
-                    description: 'Course found successfully',
+                    description: 'Course added successfully',
                     content: {
                         'application/json': {
                             schema: {
                                 type: 'object',
                                 properties: {
                                     status: { type: 'boolean', example: true },
-                                    message: { type: 'string', example: 'Course found successfully' },
-                                    data: {
-                                        type: 'array',
-                                        items: {
-                                            type: 'object',
-                                            properties: {
-                                                _id: { type: 'string', example: '691acb45c67508ff194xxx' },
-                                                institution_id: { type: 'string', example: '691ac6c18ba874c77ec2d8b2' },
-                                                course: { type: 'string', example: 'B.Tech Computer Science' }
-                                            }
-                                        }
+                                    message: {
+                                        type: 'string',
+                                        example: 'Course added successfully'
                                     }
-                                },
-                                example: {
-                                    status: true,
-                                    message: 'Course found successfully',
-                                    data: [
-                                        {
-                                            _id: '691acb45c67508ff194cb6a2',
-                                            institution_id: '691ac6c18ba874c77ec2d8b2',
-                                            course: 'B.Tech Computer Science'
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    }
-                },
-
-                '404': {
-                    description: 'No courses found',
-                    content: {
-                        'application/json': {
-                            schema: {
-                                type: 'object',
-                                properties: {
-                                    status: { type: 'boolean', example: false },
-                                    message: { type: 'string', example: 'No courses found' }
                                 }
                             }
                         }
@@ -1386,7 +1350,144 @@ module.exports = {
                                 type: 'object',
                                 properties: {
                                     status: { type: 'boolean', example: false },
-                                    message: { type: 'string', example: 'Internal server error' }
+                                    message: {
+                                        type: 'string',
+                                        example: 'Internal server error'
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    '/v1/course/fetch_all_course': {
+        get: {
+            tags: ['Course Management'],
+            summary: 'Fetch All Courses by Institution',
+            description:
+                'Retrieves all courses that belong to a specific institution.',
+
+            parameters: [
+                {
+                    name: 'institution_id',
+                    in: 'query',
+                    required: true,
+                    description: 'The ID of the institution whose courses need to be fetched',
+                    schema: {
+                        type: 'string',
+                        example: '6741a8b29f1c22380447da21'
+                    }
+                }
+            ],
+
+            responses: {
+                '200': {
+                    description: 'Courses found successfully',
+                    content: {
+                        'application/json': {
+                            schema: {
+                                type: 'object',
+                                properties: {
+                                    status: { type: 'boolean', example: true },
+                                    message: {
+                                        type: 'string',
+                                        example: 'Courses found successfully'
+                                    },
+                                    data: {
+                                        type: 'array',
+                                        description: 'List of courses under the institution',
+                                        items: {
+                                            type: 'object',
+                                            properties: {
+                                                _id: {
+                                                    type: 'string',
+                                                    example: '6741b2a09f1c22380447df91'
+                                                },
+                                                institution_id: {
+                                                    type: 'string',
+                                                    example: '6741a8b29f1c22380447da21'
+                                                },
+                                                name: {
+                                                    type: 'string',
+                                                    example: 'Full Stack Development'
+                                                },
+                                                price: {
+                                                    type: 'number',
+                                                    example: 15000
+                                                },
+                                                duration: {
+                                                    type: 'string',
+                                                    example: '3 Months'
+                                                },
+                                                languages: {
+                                                    type: 'array',
+                                                    items: { type: 'string' },
+                                                    example: ['English', 'Hindi']
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+
+                                example: {
+                                    status: true,
+                                    message: 'Courses found successfully',
+                                    data: [
+                                        {
+                                            _id: '6741b2a09f1c22380447df91',
+                                            institution_id: '6741a8b29f1c22380447da21',
+                                            name: 'Full Stack Development',
+                                            price: 15000,
+                                            duration: '3 Months',
+                                            languages: ['English', 'Hindi']
+                                        },
+                                        {
+                                            _id: '6741b3019f1c22380447dfa1',
+                                            institution_id: '6741a8b29f1c22380447da21',
+                                            name: 'Data Science',
+                                            price: 18000,
+                                            duration: '4 Months',
+                                            languages: ['English']
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+
+                '404': {
+                    description: 'No courses found for this institution',
+                    content: {
+                        'application/json': {
+                            schema: {
+                                type: 'object',
+                                properties: {
+                                    status: { type: 'boolean', example: false },
+                                    message: {
+                                        type: 'string',
+                                        example: 'No courses found'
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+
+                '500': {
+                    description: 'Internal server error',
+                    content: {
+                        'application/json': {
+                            schema: {
+                                type: 'object',
+                                properties: {
+                                    status: { type: 'boolean', example: false },
+                                    message: {
+                                        type: 'string',
+                                        example: 'Internal server error'
+                                    }
                                 }
                             }
                         }
@@ -1399,18 +1500,17 @@ module.exports = {
         get: {
             tags: ['Course Management'],
             summary: 'Fetch Single Course',
-            description:
-                'Fetch a single course using its course_id. Returns the course details if found.',
+            description: 'Retrieves full details of a specific course using its course ID.',
 
             parameters: [
                 {
                     name: 'course_id',
                     in: 'query',
                     required: true,
-                    description: 'Course ID to fetch the course details',
+                    description: 'The ID of the course that needs to be fetched',
                     schema: {
                         type: 'string',
-                        example: '691b277276e996e1f997e51c'
+                        example: '6741b2a09f1c22380447df91'
                     }
                 }
             ],
@@ -1424,23 +1524,53 @@ module.exports = {
                                 type: 'object',
                                 properties: {
                                     status: { type: 'boolean', example: true },
-                                    message: { type: 'string', example: 'Course found successfully' },
+                                    message: {
+                                        type: 'string',
+                                        example: 'Course found successfully'
+                                    },
                                     data: {
                                         type: 'object',
+                                        description: 'Course details',
                                         properties: {
-                                            _id: { type: 'string', example: '691b277276e996e1f997e51c' },
-                                            institution_id: { type: 'string', example: '691ac6c18ba874c77ec2d8b2' },
-                                            course: { type: 'string', example: 'MERN Fullstack Development' }
+                                            _id: {
+                                                type: 'string',
+                                                example: '6741b2a09f1c22380447df91'
+                                            },
+                                            institution_id: {
+                                                type: 'string',
+                                                example: '6741a8b29f1c22380447da21'
+                                            },
+                                            name: {
+                                                type: 'string',
+                                                example: 'Full Stack Development'
+                                            },
+                                            price: {
+                                                type: 'number',
+                                                example: 15000
+                                            },
+                                            duration: {
+                                                type: 'string',
+                                                example: '3 Months'
+                                            },
+                                            languages: {
+                                                type: 'array',
+                                                items: { type: 'string' },
+                                                example: ['English', 'Hindi']
+                                            }
                                         }
                                     }
                                 },
+
                                 example: {
                                     status: true,
                                     message: 'Course found successfully',
                                     data: {
-                                        _id: '691b277276e996e1f997e51c',
-                                        institution_id: '691ac6c18ba874c77ec2d8b2',
-                                        course: 'MERN Fullstack Development'
+                                        _id: '6741b2a09f1c22380447df91',
+                                        institution_id: '6741a8b29f1c22380447da21',
+                                        name: 'Full Stack Development',
+                                        price: 15000,
+                                        duration: '3 Months',
+                                        languages: ['English', 'Hindi']
                                     }
                                 }
                             }
@@ -1456,7 +1586,10 @@ module.exports = {
                                 type: 'object',
                                 properties: {
                                     status: { type: 'boolean', example: false },
-                                    message: { type: 'string', example: 'Course not found' }
+                                    message: {
+                                        type: 'string',
+                                        example: 'Course not found'
+                                    }
                                 }
                             }
                         }
@@ -1471,7 +1604,10 @@ module.exports = {
                                 type: 'object',
                                 properties: {
                                     status: { type: 'boolean', example: false },
-                                    message: { type: 'string', example: 'Internal server error' }
+                                    message: {
+                                        type: 'string',
+                                        example: 'Internal server error'
+                                    }
                                 }
                             }
                         }
@@ -1484,7 +1620,8 @@ module.exports = {
         put: {
             tags: ['Course Management'],
             summary: 'Edit Course',
-            description: 'Updates an existing course name using the course_id.',
+            description:
+                'Updates the details of an existing course. Only provided fields will be updated.',
 
             requestBody: {
                 required: true,
@@ -1495,16 +1632,31 @@ module.exports = {
                             properties: {
                                 course_id: {
                                     type: 'string',
-                                    example: '691acb45c67508ff194cb6a2',
-                                    description: 'The ID of the course to be updated'
+                                    example: '6741b2a09f1c22380447df91'
                                 },
-                                course: {
+                                name: {
                                     type: 'string',
-                                    example: 'B.Tech Information Technology',
-                                    description: 'Updated course name'
+                                    example: 'Advanced Full Stack Development',
+                                    nullable: true
+                                },
+                                price: {
+                                    type: 'number',
+                                    example: 18000,
+                                    nullable: true
+                                },
+                                duration: {
+                                    type: 'string',
+                                    example: '4 Months',
+                                    nullable: true
+                                },
+                                languages: {
+                                    type: 'array',
+                                    items: { type: 'string' },
+                                    example: ['English', 'Hindi'],
+                                    nullable: true
                                 }
                             },
-                            required: ['course_id', 'course']
+                            required: ['course_id']
                         }
                     }
                 }
@@ -1512,18 +1664,21 @@ module.exports = {
 
             responses: {
                 '200': {
-                    description: 'Course updated successfully',
+                    description: 'Course edited successfully',
                     content: {
                         'application/json': {
                             schema: {
                                 type: 'object',
                                 properties: {
                                     status: { type: 'boolean', example: true },
-                                    message: { type: 'string', example: 'Course updated successfully' }
+                                    message: {
+                                        type: 'string',
+                                        example: 'Course edited successfully'
+                                    }
                                 },
                                 example: {
                                     status: true,
-                                    message: 'Course updated successfully'
+                                    message: 'Course edited successfully'
                                 }
                             }
                         }
@@ -1538,11 +1693,10 @@ module.exports = {
                                 type: 'object',
                                 properties: {
                                     status: { type: 'boolean', example: false },
-                                    message: { type: 'string', example: 'Course not found' }
-                                },
-                                example: {
-                                    status: false,
-                                    message: 'Course not found'
+                                    message: {
+                                        type: 'string',
+                                        example: 'Course not found'
+                                    }
                                 }
                             }
                         }
@@ -1557,7 +1711,10 @@ module.exports = {
                                 type: 'object',
                                 properties: {
                                     status: { type: 'boolean', example: false },
-                                    message: { type: 'string', example: 'Internal server error' }
+                                    message: {
+                                        type: 'string',
+                                        example: 'Internal server error'
+                                    }
                                 }
                             }
                         }
@@ -1643,9 +1800,9 @@ module.exports = {
                     type: 'object',
                     properties: {
                     institution_id: { type: 'string', example: '691ac6c18ba874c77ec2d8b2' },
-                    name: { type: 'string', example: 'Rashmi Jadhav' },
+                    name: { type: 'string', example: 'John Doe' },
                     phone: { type: 'string', example: '9876543210' },
-                    course: { type: 'string', example: 'MERN Full Stack Development' },
+                    course_id: { type: 'string', example: '69200d58ce1a001549c15208' },
                     branch: { type: 'string', example: 'CSE' },
                     yearOfStudy: { type: 'string', example: '2023' },
                     role: { type: 'string', example: 'student' },
@@ -1668,7 +1825,7 @@ module.exports = {
                         'institution_id',
                         'name',
                         'phone',
-                        'course',
+                        'course_id',
                         'branch',
                         'yearOfStudy',
                         'role',
@@ -1733,99 +1890,189 @@ module.exports = {
     '/v1/student/fetch_single_student': {
         get: {
             tags: ['Student Management'],
-            summary: 'Fetch Student Details',
-            description: 'Fetches full student details using student ID, including certificates associated with the student.',
+            summary: 'Fetch Single Student Details',
+            description:
+                'Fetches complete details of a single student including profile image, certificate list, certificate PDFs, and course details.',
+
             parameters: [
-            {
-                name: 'stud_id',
-                in: 'query',
-                required: true,
-                description: 'Student ID to fetch details',
-                schema: {
-                type: 'string',
-                example: '691acb45c67508ff194cb6a2'
+                {
+                    name: 'stud_id',
+                    in: 'query',
+                    required: true,
+                    description: 'Student ID',
+                    schema: {
+                        type: 'string',
+                        example: '6742c8db5ff12a67c45f89b1'
+                    }
                 }
-            }
             ],
+
             responses: {
-            '200': {
-                description: 'Student details fetched successfully',
-                content: {
-                'application/json': {
-                    schema: {
-                    type: 'object',
-                    properties: {
-                        status: { type: 'boolean', example: true },
-                        message: { type: 'string', example: 'Student fetched successfully' },
-                        data: {
-                        type: 'object',
-                        example: {
-                            _id: '691acb45c67508ff194cb6a2',
-                            user_id: '691acb45c67508ff194cb6a1',
-                            institution_id: '691ac6c18ba874c77ec2d8b2',
-                            name: 'Rashmi Jadhav',
-                            phone_no: '9876543210',
-                            course: 'MERN Fullstack',
-                            branch: 'CSE',
-                            yearOfStudy: '2023',
-                            status: 'active',
-                            profile_picture: 'profile_981742.jpg',
-                            added_date: '2024-10-15T10:20:30.000Z',
-                            certificates: [
-                            {
-                                _id: '691acb45c67508ff194cb6ff',
-                                student_id: '691acb45c67508ff194cb6a2',
-                                course: 'MERN Fullstack',
-                                issue_date: '2024-10-15T10:00:00.000Z',
-                                expiry_date: '2025-10-15T10:00:00.000Z',
-                                status: 'active',
-                                qr_image: 'qr_691acb45c67508ff194cb6ff.png',
-                                added_date: '2024-10-15T10:20:30.000Z'
+                '200': {
+                    description: 'Student fetched successfully',
+                    content: {
+                        'application/json': {
+                            schema: {
+                                type: 'object',
+                                properties: {
+                                    status: { type: 'boolean', example: true },
+                                    message: {
+                                        type: 'string',
+                                        example: 'Student fetched successfully'
+                                    },
+                                    data: {
+                                        type: 'object',
+                                        description: 'Student full profile details',
+                                        properties: {
+                                            _id: {
+                                                type: 'string',
+                                                example: '6742c8db5ff12a67c45f89b1'
+                                            },
+                                            name: {
+                                                type: 'string',
+                                                example: 'John Doe'
+                                            },
+                                            email: {
+                                                type: 'string',
+                                                example: 'john.doe@gmail.com'
+                                            },
+                                            phone: {
+                                                type: 'string',
+                                                example: '9876543210'
+                                            },
+                                            institution_id: {
+                                                type: 'string',
+                                                example: '691ac6c18ba874c77ec2d8b2'
+                                            },
+                                            profile_picture: {
+                                                type: 'string',
+                                                example: 'profile_12345.jpg'
+                                            },
+                                            profile_url: {
+                                                type: 'string',
+                                                example:
+                                                    'https://yourdomain.com/profiles/profile_12345.jpg'
+                                            },
+
+                                            certificates: {
+                                                type: 'array',
+                                                description: 'List of student certificates',
+                                                items: {
+                                                    type: 'object',
+                                                    properties: {
+                                                        _id: {
+                                                            type: 'string',
+                                                            example: '6742cab25ff12a67c45f8a44'
+                                                        },
+                                                        course_id: {
+                                                            type: 'string',
+                                                            example: '6742c9525ff12a67c45f89e8'
+                                                        },
+                                                        course_name: {
+                                                            type: 'string',
+                                                            example: 'Full Stack Development'
+                                                        },
+                                                        pdf: {
+                                                            type: 'string',
+                                                            example: 'cert_2024.pdf'
+                                                        },
+                                                        pdf_url: {
+                                                            type: 'string',
+                                                            example:
+                                                                'https://yourdomain.com/certificates/cert_2024.pdf'
+                                                        },
+                                                        issued_on: {
+                                                            type: 'string',
+                                                            example: '2024-11-20'
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+
+                                    example: {
+                                        status: true,
+                                        message: 'Student fetched successfully',
+                                        data: {
+                                            _id: '6742c8db5ff12a67c45f89b1',
+                                            name: 'John Doe',
+                                            email: 'john.doe@gmail.com',
+                                            phone: '9876543210',
+                                            institution_id: '691ac6c18ba874c77ec2d8b2',
+                                            profile_picture: 'profile_12345.jpg',
+                                            profile_url:
+                                                'https://yourdomain.com/profiles/profile_12345.jpg',
+
+                                            certificates: [
+                                                {
+                                                    _id: '6742cab25ff12a67c45f8a44',
+                                                    course_id: '6742c9525ff12a67c45f89e8',
+                                                    course_name: 'Full Stack Development',
+                                                    pdf: 'cert_2024.pdf',
+                                                    pdf_url:
+                                                        'https://yourdomain.com/certificates/cert_2024.pdf',
+                                                    issued_on: '2024-11-20'
+                                                },
+                                                {
+                                                    _id: '6742cad05ff12a67c45f8a99',
+                                                    course_id: '6742ca105ff12a67c45f89f0',
+                                                    course_name: 'UI/UX Basics',
+                                                    pdf: '',
+                                                    pdf_url: ''
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
                             }
-                            ]
-                        }
                         }
                     }
+                },
+
+                '404': {
+                    description: 'Student data not found',
+                    content: {
+                        'application/json': {
+                            schema: {
+                                type: 'object',
+                                properties: {
+                                    status: { type: 'boolean', example: false },
+                                    message: {
+                                        type: 'string',
+                                        example: 'Student data not found'
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+
+                '500': {
+                    description: 'Internal server error',
+                    content: {
+                        'application/json': {
+                            schema: {
+                                type: 'object',
+                                properties: {
+                                    status: { type: 'boolean', example: false },
+                                    message: {
+                                        type: 'string',
+                                        example: 'Internal server error'
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
-                }
-            },
-            '404': {
-                description: 'Student not found',
-                content: {
-                'application/json': {
-                    schema: {
-                    type: 'object',
-                    properties: {
-                        status: { type: 'boolean', example: false },
-                        message: { type: 'string', example: 'Student data not found' }
-                    }
-                    }
-                }
-                }
-            },
-            '500': {
-                description: 'Internal server error',
-                content: {
-                'application/json': {
-                    schema: {
-                    type: 'object',
-                    properties: {
-                        status: { type: 'boolean', example: false },
-                        message: { type: 'string', example: 'Internal server error' }
-                    }
-                    }
-                }
-                }
-            }
             }
         }
-    }, 
+    },
     '/v1/student/edit_student': {
         put: {
             tags: ['Student Management'],
             summary: 'Edit Student Details',
-            description: 'Updates student and user details including profile picture, course, branch, email, phone number, and password.',
+            description: 'Updates student and user details including profile picture, course_id, branch, email, phone number, and password.',
 
             requestBody: {
             required: true,
@@ -1838,8 +2085,8 @@ module.exports = {
                     email: { type: 'string', example: 'student123@gmail.com' },
                     phone: { type: 'string', example: '9876543210' },
                     password: { type: 'string', example: 'NewPass@123' },
-                    name: { type: 'string', example: 'Rashmi Jadhav' },
-                    course: { type: 'string', example: 'MERN Fullstack' },
+                    name: { type: 'string', example: 'John Doe' },
+                    course_id: { type: 'string', example: '69200d58ce1a001549c15208' },
                     branch: { type: 'string', example: 'CSE' },
                     profile_picture: {
                         type: 'object',
@@ -2179,7 +2426,7 @@ module.exports = {
                 description: 'Search keyword to filter by name or email',
                 schema: {
                 type: 'string',
-                example: 'rashmi'
+                example: 'John'
                 }
             },
             {
@@ -2232,8 +2479,8 @@ module.exports = {
                             type: 'object',
                             example: {
                                 _id: '691acb45c67508ff194cb6a1',
-                                name: 'Rashmi Jadhav',
-                                email: 'rashmi@example.com',
+                                name: 'John Doe',
+                                email: 'John@example.com',
                                 phone: '9876543210',
                                 status: 'active',
                                 profile_url: 'https://example.com/profile/profile_12345.png'
@@ -2249,8 +2496,8 @@ module.exports = {
                         data: [
                         {
                             _id: '691acb45c67508ff194cb6a1',
-                            name: 'Rashmi Jadhav',
-                            email: 'rashmi@example.com',
+                            name: 'John Doe',
+                            email: 'John@example.com',
                             phone: '9876543210',
                             status: 'active',
                             profile_url:
