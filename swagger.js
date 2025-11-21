@@ -7,7 +7,7 @@ module.exports = {
   },
   servers: [
     { 
-      url: 'https://eduverify-topaz.onrender.com', 
+      url: 'https://edu-verify-3rup.onrender.com', 
       description: 'Production server'
     }
   ],
@@ -581,7 +581,7 @@ module.exports = {
                                             },
                                             logo_url: {
                                                 type: 'string',
-                                                example: 'https://yourdomain.com/logos/logo_152312.png'
+                                                example: 'https://edu-verify-3rup.onrender.com/logos/logo_152312.png'
                                             },
 
                                             student_data: {
@@ -613,7 +613,7 @@ module.exports = {
                                                         profile_url: {
                                                             type: 'string',
                                                             example:
-                                                                'https://yourdomain.com/profiles/profile_99012.png'
+                                                                'https://edu-verify-3rup.onrender.com/profiles/profile_99012.png'
                                                         },
                                                         institution_id: {
                                                             type: 'string',
@@ -641,7 +641,7 @@ module.exports = {
                                                                     pdf_url: {
                                                                         type: 'string',
                                                                         example:
-                                                                            'https://yourdomain.com/pdfs/certificate_9981.pdf'
+                                                                            'https://edu-verify-3rup.onrender.com/pdfs/certificate_9981.pdf'
                                                                     }
                                                                 }
                                                             }
@@ -660,7 +660,7 @@ module.exports = {
                                             institutionName: 'Oxford Public School',
                                             institutionCode: 'OXF123',
                                             institution_logo: 'logo_152312.png',
-                                            logo_url: 'https://yourdomain.com/logos/logo_152312.png',
+                                            logo_url: 'https://edu-verify-3rup.onrender.com/logos/logo_152312.png',
 
                                             student_data: [
                                                 {
@@ -670,7 +670,7 @@ module.exports = {
                                                     mobile: '9876543210',
                                                     profile_picture: 'profile_99012.png',
                                                     profile_url:
-                                                        'https://yourdomain.com/profiles/profile_99012.png',
+                                                        'https://edu-verify-3rup.onrender.com/profiles/profile_99012.png',
                                                     institution_id: '6741a8b29f1c22380447da21',
 
                                                     certifcates: [
@@ -679,7 +679,7 @@ module.exports = {
                                                             course_id: '67239a0f57b122380473aa01',
                                                             pdf: 'certificate_9981.pdf',
                                                             pdf_url:
-                                                                'https://yourdomain.com/pdfs/certificate_9981.pdf'
+                                                                'https://edu-verify-3rup.onrender.com/pdfs/certificate_9981.pdf'
                                                         }
                                                     ]
                                                 },
@@ -800,7 +800,7 @@ module.exports = {
                                                 logo_url: {
                                                     type: 'string',
                                                     example:
-                                                        'https://yourdomain.com/logos/logo_152312.png'
+                                                        'https://edu-verify-3rup.onrender.com/logos/logo_152312.png'
                                                 }
                                             }
                                         }
@@ -817,7 +817,7 @@ module.exports = {
                                             institutionCode: 'OXF123',
                                             institution_logo: 'logo_152312.png',
                                             logo_url:
-                                                'https://yourdomain.com/logos/logo_152312.png'
+                                                'https://edu-verify-3rup.onrender.com/logos/logo_152312.png'
                                         },
                                         {
                                             _id: '691ac7bd8ba874c77ec2d912',
@@ -927,7 +927,7 @@ module.exports = {
                                             },
                                             logo_url: {
                                                 type: 'string',
-                                                example: 'https://yourdomain.com/logos/logo_152312.png'
+                                                example: 'https://edu-verify-3rup.onrender.com/logos/logo_152312.png'
                                             },
                                             students: {
                                                 type: 'array',
@@ -960,7 +960,7 @@ module.exports = {
                                                         profile_url: {
                                                             type: 'string',
                                                             example:
-                                                                'https://yourdomain.com/profiles/profile_99012.png'
+                                                                'https://edu-verify-3rup.onrender.com/profiles/profile_99012.png'
                                                         },
                                                         institution_id: {
                                                             type: 'string',
@@ -982,7 +982,7 @@ module.exports = {
                                         institutionName: 'Oxford Public School',
                                         institutionCode: 'OXF123',
                                         institution_logo: 'logo_152312.png',
-                                        logo_url: 'https://yourdomain.com/logos/logo_152312.png',
+                                        logo_url: 'https://edu-verify-3rup.onrender.com/logos/logo_152312.png',
                                         students: [
                                             {
                                                 _id: '6741a9fc9f1c22380447dab2',
@@ -991,7 +991,7 @@ module.exports = {
                                                 mobile: '9876543210',
                                                 profile_picture: 'profile_99012.png',
                                                 profile_url:
-                                                    'https://yourdomain.com/profiles/profile_99012.png',
+                                                    'https://edu-verify-3rup.onrender.com/profiles/profile_99012.png',
                                                 institution_id:
                                                     '6741a8b29f1c22380447da21'
                                             },
@@ -1207,7 +1207,7 @@ module.exports = {
                                             institutionCode: { type: 'string', example: 'OXF123' },
                                             institution_logo: {
                                                 type: 'string',
-                                                example: 'https://yourdomain.com/logos/logo_952314.png'
+                                                example: 'https://edu-verify-3rup.onrender.com/logos/logo_952314.png'
                                             },
                                             total_students: { type: 'number', example: 120 },
                                             active_students: { type: 'number', example: 100 },
@@ -1224,7 +1224,7 @@ module.exports = {
                                         _id: '691b277276e996e1f997e51c',
                                         institutionName: 'Oxford Public School',
                                         institutionCode: 'OXF123',
-                                        institution_logo: 'https://yourdomain.com/logos/logo_952314.png',
+                                        institution_logo: 'https://edu-verify-3rup.onrender.com/logos/logo_952314.png',
                                         total_students: 120,
                                         active_students: 100,
                                         expired_students: 10,
@@ -1951,7 +1951,7 @@ module.exports = {
                                             profile_url: {
                                                 type: 'string',
                                                 example:
-                                                    'https://yourdomain.com/profiles/profile_12345.jpg'
+                                                    'https://edu-verify-3rup.onrender.com/profiles/profile_12345.jpg'
                                             },
 
                                             certificates: {
@@ -1979,7 +1979,7 @@ module.exports = {
                                                         pdf_url: {
                                                             type: 'string',
                                                             example:
-                                                                'https://yourdomain.com/certificates/cert_2024.pdf'
+                                                                'https://edu-verify-3rup.onrender.com/certificates/cert_2024.pdf'
                                                         },
                                                         issued_on: {
                                                             type: 'string',
@@ -2002,7 +2002,7 @@ module.exports = {
                                             institution_id: '691ac6c18ba874c77ec2d8b2',
                                             profile_picture: 'profile_12345.jpg',
                                             profile_url:
-                                                'https://yourdomain.com/profiles/profile_12345.jpg',
+                                                'https://edu-verify-3rup.onrender.com/profiles/profile_12345.jpg',
 
                                             certificates: [
                                                 {
@@ -2011,7 +2011,7 @@ module.exports = {
                                                     course_name: 'Full Stack Development',
                                                     pdf: 'cert_2024.pdf',
                                                     pdf_url:
-                                                        'https://yourdomain.com/certificates/cert_2024.pdf',
+                                                        'https://edu-verify-3rup.onrender.com/certificates/cert_2024.pdf',
                                                     issued_on: '2024-11-20'
                                                 },
                                                 {
@@ -2324,7 +2324,7 @@ module.exports = {
                                                         },
                                                         pdf_url: {
                                                             type: 'string',
-                                                            example: 'https://yourdomain.com/certificates/cert_20241201.pdf'
+                                                            example: 'https://edu-verify-3rup.onrender.com/certificates/cert_20241201.pdf'
                                                         },
                                                         issue_date: {
                                                             type: 'string',
@@ -2353,7 +2353,7 @@ module.exports = {
                                                     course_name: 'Full Stack Web Development',
                                                     pdf: 'cert_20241201.pdf',
                                                     pdf_url:
-                                                        'https://yourdomain.com/certificates/cert_20241201.pdf',
+                                                        'https://edu-verify-3rup.onrender.com/certificates/cert_20241201.pdf',
                                                     issue_date: '2024-11-15'
                                                 },
                                                 {
@@ -2613,7 +2613,7 @@ module.exports = {
                                                         pdf_url: {
                                                             type: 'string',
                                                             example:
-                                                                'https://yourdomain.com/certificates/cert_20241201.pdf'
+                                                                'https://edu-verify-3rup.onrender.com/certificates/cert_20241201.pdf'
                                                         },
                                                         issue_date: {
                                                             type: 'string',
@@ -2641,7 +2641,7 @@ module.exports = {
                                                     course_name: 'Full Stack Web Development',
                                                     pdf: 'cert_20241201.pdf',
                                                     pdf_url:
-                                                        'https://yourdomain.com/certificates/cert_20241201.pdf',
+                                                        'https://edu-verify-3rup.onrender.com/certificates/cert_20241201.pdf',
                                                     issue_date: '2024-12-01'
                                                 },
                                                 {
