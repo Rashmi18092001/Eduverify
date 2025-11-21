@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate</title>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Dancing+Script:wght@400;600&family=Montserrat:wght@300;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #ffffff;
+            font-family: 'Montserrat', sans-serif;
+        } 
+        html, body { 
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #ffffff;
+        }
+
+        /* OUTER GRADIENT BORDER */
+        .certificate-border {
+            /* max-width: 1500px; */
+            width: fit-content; 
+            margin: auto;
+            padding: 18px;
+            border-radius: 22px;
+            background: linear-gradient(135deg, #d4af37, #f8e7a1, #b89528);
+        }
+
+
+        /* INNER AREA WITH LIGHT GOLD BACKGROUND */
+        .certificate {
+            border-radius: 16px;
+            padding: 60px 70px;
+            background: linear-gradient(
+                135deg,
+                #fff8d9 0%,
+                #fff6e5 40%,
+                #fffdf6 100%
+            );
+        }
+
+        /* Header */
+        .title {
+            font-family: 'Great Vibes', cursive;
+            font-size: 62px;
+            color: #e72222;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .content {
+            font-size: 17px;
+            line-height: 1.7;
+            text-align: center;
+            padding: 0 40px;
+            color: #2b2b2b;
+        }
+
+        .highlight {
+            font-family: 'Dancing Script', cursive;
+            font-size: 32px;
+            font-weight: 600;
+            display: block;
+            margin: 12px 0;
+            color: #041945;
+        }
+
+        /* FOOTER */
+        .footer {
+            margin-top: 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .sign-block {
+            text-align: center;
+            font-size: 10px;
+            color: #000;
+        }
+
+        .logo_image {
+            width: 7rem;
+        }
+
+        img.qr {
+            width: 120px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- CERTIFICATE LAYOUT -->
+<!-- <div class="certificate-border">
+    <div class="certificate">
+
+        <div class="title">Certificate of Completion</div>
+
+        <div class="content">
+            This certificate is proudly presented to  
+            <span class="highlight">Rashmi Jadhav</span>
+            has completed this comprehensive MERN Stack Development program over a period of 
+            <b>three months</b>, demonstrating consistent dedication, technical excellence, and strong project-based learning.
+        </div>
+
+        <div class="footer">
+
+            <div class="sign-block">
+                <img class="logo_image" src="./logo.webp" alt="Logo">
+                <p><b>Livewire Livetech Skills</b></p>
+            </div>
+
+            <div class="sign-block">
+                <p>Certificate ID - 691847bc90379726c1561791</p>
+                <p>Issue date - June 5 2025</p>
+            </div>
+
+            <div class="sign-block">
+                <img class="qr" src="./qr.png" alt="QR code">
+            </div>
+
+        </div>
+
+    </div>
+</div> -->
+
+<div class="certificate-border">
+    <div class="certificate">
+
+        <div class="title">Certificate of Completion</div>
+
+        <div class="content">
+            This certificate is proudly presented to  
+            <span class="highlight">{{student_name}}</span>
+            has completed this comprehensive {{course_name}} program over a period of 
+            <b>{{course_duration}}</b>, demonstrating consistent dedication, technical excellence, and strong project-based learning.
+        </div>
+
+        <div class="footer">
+
+            <div class="sign-block">
+                <img class="logo_image" src="{{inst_logo}}" alt="Logo">
+                <p><b>{{inst_name}}</b></p>
+            </div>
+
+            <div class="sign-block">
+                <p>Certificate ID - {{certificate_id}}</p>
+                <p>Issue date - {{issue_date}}</p>
+            </div>
+
+            <div class="sign-block">
+                <img class="qr" src="{{qr_image}}" alt="QR code">
+            </div>
+
+        </div>
+
+    </div>
+</div>
+</body>
+</html>
