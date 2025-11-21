@@ -49,7 +49,7 @@ module.exports = {
                         },
                         email: { type: 'string', example: 'example@gmail.com' },
                         password: { type: 'string', example: 'Pass@123' },
-                        role: { type: 'string', example: 'admin' },
+                        role: { type: 'string', example: 'institution', enum:["institution", "student"] },
                         phone: { type: 'string', example: '9876543210' },
                         
                     },
