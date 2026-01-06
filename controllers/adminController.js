@@ -234,35 +234,8 @@ exports.fetchStudentByInstitution = async (req, res) => {
     
 }
 
-// exports.deleteInstitution = async (req, res) => {
-//     console.log('deleteInstitution', req.body);
-//     let db = getDB()
-
-//     try {
-//         let { inst_id } = req.body
-
-//         let inst_data = await db.collection("institution").findOne({ _id: new ObjectId(inst_id) })
-//         console.log(inst_data);
-        
-//         if(inst_data){
-//             await db.collection("institution").deleteOne({ _id: new ObjectId(inst_id) })
-//             await db.collection("students").deleteMany({ institution_id: inst_id })
-//             return res.send({ status: true, message: "Institution deleted successfully" })
-//         } else{
-//             return res.send({ status: false, message: "Institution not found" })
-//         }
-//     } catch(err){
-//         console.log('error', err);
-//         return res.send({status: false, message: 'Internal server error'})        
-//     }
-    
-// }
-
 exports.deleteInstitution = async (req, res) => {
-    let db = getDB();
-    console.log('db', db.databaseName);
-    
-    console.log('deleteInstitution', req.body);
+    let db = getDB();    
     
     try {
         const { inst_id } = req.body;
@@ -277,7 +250,6 @@ exports.deleteInstitution = async (req, res) => {
         const instObjectId = new ObjectId(inst_id);
         console.log('instObjectId', instObjectId);
         
-        // 1️⃣ Find institution
         const institution = await db.collection("institution").findOne({
             _id: instObjectId
         });
@@ -290,36 +262,30 @@ exports.deleteInstitution = async (req, res) => {
             });
         }
 
-        const institutionUserId = institution.user_id; // STRING
+        const institutionUserId = institution.user_id; 
 
-        // 2️⃣ Find all students of this institution
         const students = await db.collection("students")
             .find({ institution_id: inst_id })
             .project({ user_id: 1 })
             .toArray();
 
-        // Convert student user_ids to ObjectId
         const studentUserObjectIds = students
             .map(s => s.user_id)
             .filter(id => ObjectId.isValid(id))
             .map(id => new ObjectId(id));
 
-        // 3️⃣ Delete institution
         await db.collection("institution").deleteOne({
             _id: instObjectId
         });
 
-        // 4️⃣ Delete institution user
         await db.collection("users").deleteOne({
             _id: new ObjectId(institutionUserId)
         });
 
-        // 5️⃣ Delete students
         await db.collection("students").deleteMany({
             institution_id: inst_id
         });
 
-        // 6️⃣ Delete student users
         if (studentUserObjectIds.length > 0) {
             await db.collection("users").deleteMany({
                 _id: { $in: studentUserObjectIds }

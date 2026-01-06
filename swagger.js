@@ -1051,6 +1051,136 @@ module.exports = {
             }
         }
     },
+    '/delete_institution': {
+        delete: {
+            tags: ['Admin Management'],
+            summary: 'Delete Institution',
+            description:
+                'Deletes an institution along with all its associated students and related user accounts. This operation removes institution data, student records, and corresponding user entries permanently.',
+            requestBody: {
+                required: true,
+                content: {
+                    'application/json': {
+                        schema: {
+                            type: 'object',
+                            required: ['inst_id'],
+                            properties: {
+                                inst_id: {
+                                    type: 'string',
+                                    description: 'The ID of the institution to be deleted',
+                                    example: '6741a8b29f1c22380447da21'
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+
+            responses: {
+                '200': {
+                    description: 'Institution and related data deleted successfully',
+                    content: {
+                        'application/json': {
+                            schema: {
+                                type: 'object',
+                                properties: {
+                                    status: {
+                                        type: 'boolean',
+                                        example: true
+                                    },
+                                    message: {
+                                        type: 'string',
+                                        example:
+                                            'Institution, students, and all related users deleted successfully'
+                                    }
+                                }
+                            },
+                            example: {
+                                status: true,
+                                message:
+                                    'Institution, students, and all related users deleted successfully'
+                            }
+                        }
+                    }
+                },
+
+                '400': {
+                    description: 'Invalid institution ID',
+                    content: {
+                        'application/json': {
+                            schema: {
+                                type: 'object',
+                                properties: {
+                                    status: {
+                                        type: 'boolean',
+                                        example: false
+                                    },
+                                    message: {
+                                        type: 'string',
+                                        example: 'Invalid institution ID'
+                                    }
+                                }
+                            },
+                            example: {
+                                status: false,
+                                message: 'Invalid institution ID'
+                            }
+                        }
+                    }
+                },
+
+                '404': {
+                    description: 'Institution not found',
+                    content: {
+                        'application/json': {
+                            schema: {
+                                type: 'object',
+                                properties: {
+                                    status: {
+                                        type: 'boolean',
+                                        example: false
+                                    },
+                                    message: {
+                                        type: 'string',
+                                        example: 'Institution not found'
+                                    }
+                                }
+                            },
+                            example: {
+                                status: false,
+                                message: 'Institution not found'
+                            }
+                        }
+                    }
+                },
+
+                '500': {
+                    description: 'Internal server error',
+                    content: {
+                        'application/json': {
+                            schema: {
+                                type: 'object',
+                                properties: {
+                                    status: {
+                                        type: 'boolean',
+                                        example: false
+                                    },
+                                    message: {
+                                        type: 'string',
+                                        example: 'Internal server error'
+                                    }
+                                }
+                            },
+                            example: {
+                                status: false,
+                                message: 'Internal server error'
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
 
 
 
