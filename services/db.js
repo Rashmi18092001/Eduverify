@@ -1,5 +1,7 @@
 const { MongoClient } = require('mongodb');
 const url = process.env.MONGO_URL;
+console.log('url', url);
+
 let client;
 let db;
  

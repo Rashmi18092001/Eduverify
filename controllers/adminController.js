@@ -1,6 +1,8 @@
 let jwt = require('jsonwebtoken')
 let { getDB } = require('../services/db')
 const { ObjectId } = require("mongodb");
+const bcrypt = require("bcrypt");
+
 
 let JWT_SECRET = process.env.JWT_SECRET;
 let profileUrl = process.env.PROFILE_URL;
@@ -25,7 +27,10 @@ exports.addAdmin = async(req, res) =>{
         let admin_data = await db.collection("admin").find({ email }).toArray()
         
         if(admin_data.length == 0){
-            await db.collection("admin").insertOne({email, password})
+            const saltRounds = 10;
+            const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+            await db.collection("admin").insertOne({email, password: hashedPassword})
 
             return res.send({ status: true, message: "Admin added successfully" })
 
@@ -48,13 +53,20 @@ exports.loginAdmin = async (req, res) => {
         let admin_data = await db.collection("admin").find({email}).toArray()
 
         if(admin_data.length == 0){
-            return res.send({ status: false, message: "Admin not found" }) 
+            return res.send({ status: false, message: "Email not found" }) 
         } else{
-            let id = admin_data[0]._id.toString()
-            let email = admin_data[0].email
-            let token = createToken({id, email})
+            let admin_hashed_pass = admin_data[0].password
 
-            return res.send({ status: true, message: "Admin logged in sucessfully", token })
+            const isMatch = await bcrypt.compare(password, admin_hashed_pass);
+            if(!isMatch){
+                return res.send({ status: false, message: "Incorrect password", token })
+            } else{
+                let id = admin_data[0]._id.toString()
+                let email = admin_data[0].email
+                let token = createToken({id, email})
+
+                return res.send({ status: true, message: "Admin logged in sucessfully", token })
+            }
         }
         
     } catch(err){
@@ -75,7 +87,10 @@ exports.editAdmin = async (req, res) => {
         if(!admin_data){
             return res.send({ status: false, message: "Admin not found" })
         } else{
-            await db.collection("admin").updateOne({_id: new ObjectId(admin_id)}, {$set: {email, password}})
+            const saltRounds = 10;
+            const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+            await db.collection("admin").updateOne({_id: new ObjectId(admin_id)}, {$set: {email, password: hashedPassword}})
             return res.send({ status: true, message: "Admin edited sucessfully" })
         }
         
@@ -84,7 +99,6 @@ exports.editAdmin = async (req, res) => {
         return res.send({status: false, message: 'Internal server error'})        
     }  
 }
-
 
 exports.fetchSingleInstitution = async (req, res) => {
     console.log('fetchSingleInstitution', req.query);
@@ -219,3 +233,109 @@ exports.fetchStudentByInstitution = async (req, res) => {
     }
     
 }
+
+// exports.deleteInstitution = async (req, res) => {
+//     console.log('deleteInstitution', req.body);
+//     let db = getDB()
+
+//     try {
+//         let { inst_id } = req.body
+
+//         let inst_data = await db.collection("institution").findOne({ _id: new ObjectId(inst_id) })
+//         console.log(inst_data);
+        
+//         if(inst_data){
+//             await db.collection("institution").deleteOne({ _id: new ObjectId(inst_id) })
+//             await db.collection("students").deleteMany({ institution_id: inst_id })
+//             return res.send({ status: true, message: "Institution deleted successfully" })
+//         } else{
+//             return res.send({ status: false, message: "Institution not found" })
+//         }
+//     } catch(err){
+//         console.log('error', err);
+//         return res.send({status: false, message: 'Internal server error'})        
+//     }
+    
+// }
+
+exports.deleteInstitution = async (req, res) => {
+    let db = getDB();
+    console.log('db', db.databaseName);
+    
+    console.log('deleteInstitution', req.body);
+    
+    try {
+        const { inst_id } = req.body;
+
+        if (!ObjectId.isValid(inst_id)) {
+            return res.send({
+                status: false,
+                message: "Invalid institution ID"
+            });
+        }
+
+        const instObjectId = new ObjectId(inst_id);
+        console.log('instObjectId', instObjectId);
+        
+        // 1️⃣ Find institution
+        const institution = await db.collection("institution").findOne({
+            _id: instObjectId
+        });
+        console.log('institution', institution);
+        
+        if (!institution) {
+            return res.send({
+                status: false,
+                message: "Institution not found"
+            });
+        }
+
+        const institutionUserId = institution.user_id; // STRING
+
+        // 2️⃣ Find all students of this institution
+        const students = await db.collection("students")
+            .find({ institution_id: inst_id })
+            .project({ user_id: 1 })
+            .toArray();
+
+        // Convert student user_ids to ObjectId
+        const studentUserObjectIds = students
+            .map(s => s.user_id)
+            .filter(id => ObjectId.isValid(id))
+            .map(id => new ObjectId(id));
+
+        // 3️⃣ Delete institution
+        await db.collection("institution").deleteOne({
+            _id: instObjectId
+        });
+
+        // 4️⃣ Delete institution user
+        await db.collection("users").deleteOne({
+            _id: new ObjectId(institutionUserId)
+        });
+
+        // 5️⃣ Delete students
+        await db.collection("students").deleteMany({
+            institution_id: inst_id
+        });
+
+        // 6️⃣ Delete student users
+        if (studentUserObjectIds.length > 0) {
+            await db.collection("users").deleteMany({
+                _id: { $in: studentUserObjectIds }
+            });
+        }
+
+        return res.send({
+            status: true,
+            message: "Institution, students, and all related users deleted successfully"
+        });
+
+    } catch (err) {
+        console.error("Delete institution error:", err);
+        return res.send({
+            status: false,
+            message: "Internal server error"
+        });
+    }
+};

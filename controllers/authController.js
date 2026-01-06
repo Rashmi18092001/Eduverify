@@ -3,6 +3,8 @@ let { getDB } = require('../services/db')
 const { ObjectId } = require("mongodb");
 let fs = require('fs')
 let path = require('path')
+const bcrypt = require("bcrypt");
+
 
 let JWT_SECRET = process.env.JWT_SECRET;
 
@@ -36,6 +38,9 @@ exports.register = async (req, res) => {
             end_date.setFullYear(end_date.getFullYear() + 1)
             end_date = end_date.toISOString().split("T")[0];
 
+            const saltRounds = 10;
+            const hashedPassword = await bcrypt.hash(password, saltRounds);
+
             if(institution_logo){
                 let file_name = institution_logo.file_name.split(".")[0]
                 let ext = institution_logo.file_name.split(".")[1]
@@ -58,7 +63,7 @@ exports.register = async (req, res) => {
                 }
             }            
         
-        let insertedUser = await db.collection('users').insertOne({ name: institutionName, email, phone, password, role, status: 'active', createdAt: new Date()})
+        let insertedUser = await db.collection('users').insertOne({ name: institutionName, email, phone, password: hashedPassword, role, status: 'active', createdAt: new Date()})
         await db.collection('institution').insertOne({ user_id: insertedUser.insertedId.toString(), institutionName, institutionCode, institution_logo, status: 'active' })
        
         let token = createToken({id: insertedUser.insertedId.toString(), email: email})
@@ -80,15 +85,16 @@ exports.login = async (req, res) => {
     if(!user){
         return res.send({status: false, message: "Email not found"})
     }
-    
-    let token = createToken({id: user._id.toString(), email})
+    let user_pass = user.password
 
-        if(user.password == password){
-            return res.send({ status: true, message:"User logged in successfully", token })
-        }
-        else{
-        return res.send({ status: false, message: "Password incorrect" })
-        }
+    const isMatch = await bcrypt.compare(password, user_pass);
+    
+    if(isMatch){
+      let token = createToken({id: user._id.toString(), email})
+      return res.send({ status: true, message:"User logged in successfully", token })
+    } else{
+      return res.send({ status: false, message: "Password incorrect" })
+    }
 };
 
 exports.refresh_token = (req, res) => {
