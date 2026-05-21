@@ -95,11 +95,25 @@ global.browserInstance = null
 
 const startBrowser = async () => {
 
+    // global.browserInstance = await puppeteer.launch({
+    //     args: chromium.args,
+    //     executablePath: await chromium.executablePath(),
+    //     headless: true,
+    // });
     global.browserInstance = await puppeteer.launch({
-        args: chromium.args,
-        executablePath: await chromium.executablePath(),
-        headless: true,
-    });
+                executablePath: await chromium.executablePath(),
+
+                headless: true,
+
+                args: [
+                    ...chromium.args,
+                    "--no-sandbox",
+                    "--disable-setuid-sandbox",
+                    "--disable-dev-shm-usage",
+                    "--single-process",
+                    "--no-zygote",
+                ],
+            });
 
     console.log("Puppeteer browser started");
 };
