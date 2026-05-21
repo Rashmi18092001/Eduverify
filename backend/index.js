@@ -85,6 +85,7 @@ const startBrowser = async () => {
 
     global.browserInstance = await puppeteer.launch({
         headless: true,
+        executablePath: puppeteer.executablePath(),
         args: ['--no-sandbox', '--disable-setuid-sandbox']
     })
 
