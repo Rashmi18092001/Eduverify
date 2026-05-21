@@ -12,6 +12,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@sparticuz/chromium": "^147.0.0",
     "bcrypt": "^6.0.0",
     "cloudinary": "^2.10.0",
     "cookie-parser": "^1.4.7",
@@ -24,7 +25,7 @@
     "node-cron": "^4.2.1",
     "nodemon": "^3.1.10",
     "pdf-lib": "^1.17.1",
-    "puppeteer": "^24.30.0",
+    "puppeteer-core": "^25.0.4",
     "qrcode": "^1.5.4",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1"

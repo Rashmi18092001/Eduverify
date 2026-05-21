@@ -11,8 +11,9 @@ const swaggerJsdoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require('./swagger');
 const cookieParser = require('cookie-parser');
-const puppeteer = require("puppeteer");
-
+// const puppeteer = require("puppeteer");
+const puppeteer = require("puppeteer-core");
+const chromium = require("@sparticuz/chromium");
 
 connectDB()
 
@@ -81,18 +82,27 @@ cron.schedule("0 0 * * *", async () => {
 
 global.browserInstance = null
 
+// const startBrowser = async () => {
+
+//     global.browserInstance = await puppeteer.launch({
+//         args: chromium.args,
+//         executablePath: await chromium.executablePath(),
+//         headless: true,
+//     });
+
+//     console.log("Puppeteer browser started");
+// };
+
 const startBrowser = async () => {
 
     global.browserInstance = await puppeteer.launch({
+        args: chromium.args,
+        executablePath: await chromium.executablePath(),
         headless: true,
-        executablePath: puppeteer.executablePath(),
-        args: ['--no-sandbox', '--disable-setuid-sandbox']
-    })
+    });
 
-    console.log('Puppeteer browser started')
-    console.log('browserInstance', global.browserInstance );
-    
-}
+    console.log("Puppeteer browser started");
+};
 
 const startServer = async () => {
 
