@@ -5,6 +5,10 @@ const { editInstitution, InstStats, fetchInstitutionCertificates, issueCertifica
 const auth = require('../middlewares/authMiddleware')
 const {upload} = require('../middlewares/multerMiddleware')
 
+console.log(upload)
+console.log(auth)
+console.log(editInstitution)
+
 router.put('/edit_institution', upload.fields([{name: 'profile_picture', maxCount: 1}]), auth, editInstitution);
 router.get('/stats', auth, InstStats);
 router.get('/fetch_institution_certificates', auth, fetchInstitutionCertificates);
