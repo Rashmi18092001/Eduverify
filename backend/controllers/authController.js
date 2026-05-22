@@ -87,7 +87,7 @@ exports.register = async (req, res) => {
             // }            
         
         let insertedUser = await db.collection('users').insertOne({ name: institutionName, email, phone, password: hashedPassword, role, status: 'active', createdAt: new Date()})
-        await db.collection('institution').insertOne({ user_id: insertedUser.insertedId.toString(), institutionName, institutionCode, institution_logo: logo?.url || "", status: 'active' })
+        await db.collection('institution').insertOne({ user_id: insertedUser.insertedId.toString(), institutionName, institutionCode, status: 'active' })
 
         // return res.send({ status: true, message: "Registered successfully", token })
         return res.send({status: true, message: "Registered successfully"})
