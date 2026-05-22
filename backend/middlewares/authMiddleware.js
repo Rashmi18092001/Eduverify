@@ -11,6 +11,8 @@ const authMiddleware = (req, res, next) => {
 
     // const token = authHeader.split(" ")[1];
     const token = req.cookies.accessToken
+    console.log('tokennnn', token);
+    
     if(!token){
         return res.send({status: false, message: "No token"})
     }
