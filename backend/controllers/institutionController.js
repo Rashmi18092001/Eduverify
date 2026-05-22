@@ -224,12 +224,17 @@ exports.fetchInstitutionCertificates = async(req, res) => {
         // console.log('user id', user_id);
 
         let {search} = req.query;
+        let {student_id} = req.query;
         let {page} = req.query || 1;
         let limit = 10;
         let skip = (Number(page)-1) * limit;
         // console.log('skip', skip);
         
         let query = {};
+
+        if(student_id){
+            query.student_id = student_id
+        }
 
         let inst_data = await db.collection('institution').findOne({user_id: user_id});
         if(inst_data){
@@ -269,7 +274,10 @@ exports.fetchInstitutionCertificates = async(req, res) => {
                         let student_id = certificate.student_id
                         let student_data = await db.collection("students").findOne({_id: new ObjectId(student_id)})
                         if(student_data){
+                            console.log('student_data', student_data);
+                            
                             certificate.student_name = student_data.name
+                            certificate.profile_picture = student_data.profile_picture
                         }
 
                         let course_id = certificate.course_id

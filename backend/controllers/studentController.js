@@ -130,21 +130,21 @@ exports.fetchSingleStudent = async (req, res) => {
                 stud_details.user_details = user_data
             }
 
-            let course_id = stud_details.course_id
-            console.log('course_id', course_id);
+            // let course_id = stud_details.course_id
+            // console.log('course_id', course_id);
             
-            if(course_id){
-                const course_details = await db.collection("courses").findOne({_id: new ObjectId(course_id)});
-                console.log('course_details', course_details);
+            // if(course_id){
+            //     const course_details = await db.collection("courses").findOne({_id: new ObjectId(course_id)});
+            //     console.log('course_details', course_details);
                 
-                if(course_details){
-                    stud_details.course_details = course_details
-                }
-            }
+            //     if(course_details){
+            //         stud_details.course_details = course_details
+            //     }
+            // }
 
-            let student_profile = stud_details.profile_picture
-            stud_details.profile_url = student_profile
-            let stud_cert = await db.collection("certificates").find({student_id: stud_id}).toArray()
+            // let student_profile = stud_details.profile_picture
+            // stud_details.profile_url = student_profile
+            let stud_cert = await db.collection("certificates").find({student_id: stud_id}).sort({_id: -1}).toArray()
             if(stud_cert.length == 0){
                 stud_details.certificates = []
             } else{
@@ -161,6 +161,7 @@ exports.fetchSingleStudent = async (req, res) => {
                     if(course_data){
                         course_details = course_data
                     }
+                    certificate.course_details = course_details
                 }
                 stud_details.certificates = stud_cert
             }
@@ -607,6 +608,12 @@ exports.revokeStudent = async (req, res) => {
         let user_id = student_data.user_id
         await db.collection("users").updateOne({ _id: new ObjectId(user_id) }, { $set: {status: "revoked"} })
         await db.collection("students").updateOne({ _id: new ObjectId(student_id) }, { $set: {status: "revoked"} })
+        
+        let certificates = await db.collection('certificates').find({student_id}).toArray()
+        let ids = certificates.map(certificate => certificate._id);
+
+        await db.collection("certificates").updateMany({_id: {$in: ids}}, {$set: {status: 'revoked'}})
+
         return res.send({ status: true, message: "Student revoked successfully" })
     }
 } 
