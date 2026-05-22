@@ -53,7 +53,7 @@ exports.register = async (req, res) => {
             const saltRounds = 10;
             const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-            // if(institution_logo){
+            if(institution_logo){
               let logo_local_path = req.files?.institution_logo[0]?.path
 
               if(!logo_local_path){
@@ -63,7 +63,7 @@ exports.register = async (req, res) => {
               const logo = await uploadOnCloudinary(logo_local_path)
               console.log('logo', logo);
               
-            // }
+            }
             // if(institution_logo){
             //     let file_name = institution_logo.file_name.split(".")[0]
             //     let ext = institution_logo.file_name.split(".")[1]
