@@ -40,7 +40,8 @@ const StudentList = () => {
 
         const fetchList = async() => {
 
-            let url = `http://localhost:3000/v1/student/fetch_student_by_search?page=${page}`
+            // let url = `http://localhost:3000/v1/student/fetch_student_by_search?page=${page}`
+            let url = `https://eduverify.onrender.com/v1/student/fetch_student_by_search?page=${page}`
 
             if(search.trim != ""){
                 url += `&search=${search}`
@@ -65,7 +66,8 @@ const StudentList = () => {
     const revokeStudent = async(id) => {
         console.log('revokeStudent', id);
         
-        const response = await fetch('http://localhost:3000/v1/student/revoke_student', {
+        // const response = await fetch('http://localhost:3000/v1/student/revoke_student', {
+        const response = await fetch('https://eduverify.onrender.com/v1/student/revoke_student', {
             method: 'PUT',
             headers: {
                 "Content-Type": "application/json"
@@ -156,7 +158,7 @@ const StudentList = () => {
                                         <thead >
                                             <tr className='bg-gray-200 rounded-xl'>
                                                 <th className='font-semibold text-[1.1rem] py-2 px-3 text-left text-gray-800'>#</th>
-                                                <th className='font-semibold text-[1.1rem] py-2 px-3 text-left text-gray-800'>Name</th>
+                                                <th className='font-semibold text-[1.1rem] py-2 text-left text-gray-800'>Name</th>
                                                 <th className='font-semibold text-[1.1rem] text-left text-gray-800'>Email</th>
                                                 <th className='font-semibold text-[1.1rem] text-left text-gray-800'>Phone No.</th>
                                                 <th className='font-semibold text-[1.1rem] text-left text-gray-800'>Batch</th>
@@ -169,10 +171,10 @@ const StudentList = () => {
                                                 return (
                                                     <tr onClick={() => navigate(`/student_detail?id=${tr._id}`)} key={index} className={`border-b-2 border-gray-300 cursor-pointer ${tr.status == 'revoked' ? 'bg-red-200' : ""}`}>
                                                         <td className='text-left py-2 px-3 font-medium text-gray-700'>{index+1}</td>                        
-                                                        <td className='text-left py-2 px-3 font-medium text-gray-700'>{tr.name}</td>
-                                                        <td className='text-left font-medium text-gray-700'>{tr.user_details.email}</td>
-                                                        <td className='text-left font-medium text-gray-700'>{tr.user_details.phone}</td>
-                                                        <td className='text-left font-medium text-gray-700'>{tr.batch}</td>
+                                                        <td className='text-left py-2 font-medium text-gray-700'>{tr.name}</td>
+                                                        <td className='text-left py-2 font-medium text-gray-700'>{tr.user_details.email}</td>
+                                                        <td className='text-left py-2 font-medium text-gray-700'>{tr.user_details.phone}</td>
+                                                        <td className='text-left py-2 font-medium text-gray-700'>{tr.batch}</td>
                                                         <td>
                                                         <div className='flex gap-5'>
                                                             <div><Eye size={16} color="#19a5e1" /></div>

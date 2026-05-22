@@ -27,7 +27,8 @@ const Password_change = () => {
       alert("Passwords do not match")
     }
 
-    let response = await fetch('http://localhost:3000/v1/student/change_password', {
+    // let response = await fetch('http://localhost:3000/v1/student/change_password', {
+    let response = await fetch('https://eduverify.onrender.com/v1/student/change_password', {
       headers: {
         'Content-Type': 'application/json'
       },

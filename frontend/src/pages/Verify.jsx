@@ -15,7 +15,8 @@ const Verify = () => {
 
     const handleSave = async() => {
         try {
-            const response = await fetch(`http://192.168.100.103:3000/v1/verify/verify_certificate?certificate_id=${certId}`, {
+            // const response = await fetch(`http://192.168.100.103:3000/v1/verify/verify_certificate?certificate_id=${certId}`, {
+            const response = await fetch(`https://eduverify.onrender.com/v1/verify/verify_certificate?certificate_id=${certId}`, {
                 credentials: 'include',
                 method: 'GET'
             })
@@ -42,7 +43,8 @@ const Verify = () => {
     useEffect(()=>{
         const fetchQR = async()=>{
             try {
-                const response = await fetch(`http://localhost:3000/v1/verify/fetch_QR?certificate_id=${certId}`, {
+                // const response = await fetch(`http://localhost:3000/v1/verify/fetch_QR?certificate_id=${certId}`, {
+                const response = await fetch(`https://eduverify.onrender.com/v1/verify/fetch_QR?certificate_id=${certId}`, {
                     method: 'GET'
                 })
                 const data = await response.json();

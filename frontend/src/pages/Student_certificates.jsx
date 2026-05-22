@@ -20,7 +20,8 @@ const Student_certificates = () => {
     const fetchData = async() => {
         try {
                     
-            const response = await fetch(`http://localhost:3000/v1/student/fetch_own_certificates?page=${page}`,  {
+            // const response = await fetch(`http://localhost:3000/v1/student/fetch_own_certificates?page=${page}`,  {
+            const response = await fetch(`https://eduverify.onrender.com/v1/student/fetch_own_certificates?page=${page}`,  {
                 credentials: 'include',
                 method: 'GET'
             })
@@ -133,10 +134,10 @@ const Student_certificates = () => {
                                         
                                         return (
                                             <tr key={index} className='border-b-2 border-gray-300'>
-                                                <td className='text-left py-2 px-3 font-medium text-gray-700'>{tr.course_name}</td>
-                                                <td className='text-left py-2 px-3 font-medium text-gray-700'>{tr.issue_date}</td>
-                                                <td className='text-left py-2 px-3 font-medium text-gray-700'>{tr.expiry_date}</td>
-                                                <td className={`text-left py-2 px-3 font-medium ${tr.status == "expired" || tr.status == "revoked" ? 'text-red-700' : 'text-green-600'}`}>{tr.status.charAt(0).toUpperCase() + tr.status.slice(1)}</td>       
+                                                <td className='text-left text-sm md:text-base py-2 px-3 font-medium text-gray-700'>{tr.course_name}</td>
+                                                <td className='text-left text-sm md:text-base py-2 px-3 font-medium text-gray-700'>{tr.issue_date}</td>
+                                                <td className='text-left text-sm md:text-base py-2 px-3 font-medium text-gray-700'>{tr.expiry_date}</td>
+                                                <td className={`text-left text-sm md:text-base py-2 px-3 font-medium ${tr.status == "expired" || tr.status == "revoked" ? 'text-red-700' : 'text-green-600'}`}>{tr.status.charAt(0).toUpperCase() + tr.status.slice(1)}</td>       
                                                 <td className='py-2 px-3 '>
                                                     <div className='flex gap-5'>
                                                         <div className='cursor-pointer' onClick={()=>{window.open(tr.pdf_url, "_blank")}}><Eye size={16} color="#19a5e1" /></div>

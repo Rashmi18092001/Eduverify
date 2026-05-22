@@ -21,8 +21,8 @@ const Login_page = () => {
 
       try {
 
-        const response = await fetch('http://localhost:3000/v1/auth/login', {
-        // const response = await fetch('https://edu-verify-3rup.onrender.com/v1/auth/login', {
+        // const response = await fetch('http://localhost:3000/v1/auth/login', {
+        const response = await fetch('https://eduverify.onrender.com/v1/auth/login', {
 
           method: 'POST',
           headers: {

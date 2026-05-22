@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import Logo from '../components/Logo'
 import { X } from 'lucide-react';
 import Tab from '../components/Tab'
-import { House } from 'lucide-react';
+import { House, LibraryBig  } from 'lucide-react';
 import { Users } from 'lucide-react';
 import { FilePlus } from 'lucide-react';
 import { File } from 'lucide-react';
@@ -25,7 +25,7 @@ const SidebarTab = ({ open, setOpen, activeTab, setActiveTab }) => {
     setShowOverlay(true);
     
     try {
-        let response = await fetch('http://localhost:3000/v1/auth/logout', {
+        let response = await fetch('https://eduverify.onrender.com/v1/auth/logout', {
             method: 'POST',
             credentials: 'include'
         })
@@ -59,7 +59,7 @@ const SidebarTab = ({ open, setOpen, activeTab, setActiveTab }) => {
         { icon: File, label: "Certificates", path: "/certificates" },
         { icon: FilePlus, label: "Issue Certificate", path: "/issue_certificate" },
         { icon: User, label: "Profile", path: "/profile" },
-        { icon: User, label: "Courses", path: "/courses" },
+        { icon: LibraryBig , label: "Courses", path: "/courses" },
         { icon: LogOut, label: "Logout", path: "/logout" },
 
     ]

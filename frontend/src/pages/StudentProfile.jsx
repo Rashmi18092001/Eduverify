@@ -25,7 +25,8 @@ const StudentProfile = () => {
   const handleSave = async() => {
     try {
 
-      const response = await fetch('http://localhost:3000/v1/student/edit_student', {
+      // const response = await fetch('http://localhost:3000/v1/student/edit_student', {
+      const response = await fetch('https://eduverify.onrender.com/v1/student/edit_student', {
         headers: {
           'Content-Type': 'application/json'
         },
@@ -52,7 +53,8 @@ const StudentProfile = () => {
     const fetchData = async()=>{
       try {
 
-        const response = await fetch('http://localhost:3000/v1/student/fetch_student', {
+        // const response = await fetch('http://localhost:3000/v1/student/fetch_student', {
+        const response = await fetch('https://eduverify.onrender.com/v1/student/fetch_student', {
           credentials: 'include',
           method: 'GET'
         })

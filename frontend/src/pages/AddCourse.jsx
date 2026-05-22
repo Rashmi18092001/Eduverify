@@ -29,7 +29,9 @@ const AddCourse = () => {
         try {
             e.preventDefault();
 
-            const response = await fetch("http://localhost:3000/v1/course/add_course", {
+            // const response = await fetch("http://localhost:3000/v1/course/add_course", {
+            const response = await fetch('https://eduverify.onrender.com/v1/course/add_course', {
+
                 headers: {
                     'Content-Type': 'application/json'
                 },

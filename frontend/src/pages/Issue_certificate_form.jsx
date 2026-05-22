@@ -38,8 +38,8 @@ const Issue_certificate_form = () => {
 
       try {
               
-              const response = await fetch(
-                  `http://localhost:3000/v1/student/fetch_student_by_search?search=${value}`,
+              // const response = await fetch(`http://localhost:3000/v1/student/fetch_student_by_search?search=${value}`,
+              const response = await fetch(`https://eduverify.onrender.com/v1/student/fetch_student_by_search?search=${value}`,
                   {
                       credentials: 'include',
                       method: 'GET'
@@ -73,7 +73,9 @@ const Issue_certificate_form = () => {
        try {
               
               const response = await fetch(
-                  `http://localhost:3000/v1/course/fetch_all_course?name=${value}`,
+                  // `http://localhost:3000/v1/course/fetch_all_course?name=${value}`,
+                  `https://eduverify.onrender.com/v1/course/fetch_all_course?name=${value}`,
+
                   {
                       credentials: 'include',
                       method: 'GET'
@@ -109,7 +111,8 @@ const Issue_certificate_form = () => {
       
       try {
               
-        const response = await fetch(`http://localhost:3000/v1/institution/issue_certificate`, {
+        // const response = await fetch(`http://localhost:3000/v1/institution/issue_certificate`, {
+        const response = await fetch(`https://eduverify.onrender.com/v1/institution/issue_certificate`, {
           headers: {
             'Content-Type': 'application/json'
           },
@@ -135,7 +138,8 @@ const Issue_certificate_form = () => {
           // hit generate pdf api
           console.log('first api complete');
           
-          let second_response = await fetch(`http://localhost:3000/v1/pdf/generate_pdf`, {
+          // let second_response = await fetch(`http://localhost:3000/v1/pdf/generate_pdf`, {
+          let second_response = await fetch(`https://eduverify.onrender.com/v1/pdf/generate_pdf`, {
             headers: {
               'Content-Type': 'application/json'
             },

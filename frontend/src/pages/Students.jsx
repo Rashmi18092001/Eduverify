@@ -33,7 +33,8 @@ const Students = () => {
       try {
         const token = localStorage.getItem('token');
 
-        const response = await fetch('http://localhost:3000/v1/course/fetch_all_course', {
+        // const response = await fetch('http://localhost:3000/v1/course/fetch_all_course', {
+        const response = await fetch('https://eduverify.onrender.com/v1/course/fetch_all_course', {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -61,7 +62,8 @@ const Students = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:3000/v1/student/add_student', {
+      // const response = await fetch('http://localhost:3000/v1/student/add_student', {
+      const response = await fetch('https://eduverify.onrender.com/v1/student/add_student', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

@@ -6,6 +6,7 @@ import Logo from '../components/Logo';
 import Student_card from '../components/Student_card';
 import SidebarTab from '../components/SidebarTab';
 import { useNavigate } from 'react-router-dom';
+import buildingImage from '../images/building.png'
 
 const InstDashboard = () => {
 
@@ -32,7 +33,8 @@ const InstDashboard = () => {
         const fetchStats = async() => {
             try {
                 
-                const response = await fetch('http://localhost:3000/v1/institution/stats',  {
+                // const response = await fetch('http://localhost:3000/v1/institution/stats',  {
+                const response = await fetch('https://eduverify.onrender.com/v1/institution/stats',  {
                     credentials: 'include',
                 })
                 // console.log('response', response);
@@ -59,14 +61,15 @@ const InstDashboard = () => {
             
             try {
                 
-                const response = await fetch('http://localhost:3000/v1/institution/fetch_institution_certificates',  {
+                // const response = await fetch('http://localhost:3000/v1/institution/fetch_institution_certificates',  {
+                const response = await fetch('https://eduverify.onrender.com/v1/institution/fetch_institution_certificates',  {
                     credentials: 'include',
                     method: 'GET'
                 })
 
                 const data = await response.json();
                 // console.log('dataaaa', data.data.length);
-                let newData = data.data.splice(0, 3)
+                let newData = data.data?.splice(0, 3)
                 // console.log("newww", newData);
                 
                 if(data.status){
@@ -104,7 +107,7 @@ const InstDashboard = () => {
                     <Bell size={25} color="#5a5858" />
                     {/* profile */}
                     <div className='w-10 h-10 rounded-full border-2 bg-blue-900 overflow-hidden'>
-                        <img src="https://media.istockphoto.com/id/2236226067/photo/user-icon-square-shape-3d.webp?a=1&b=1&s=612x612&w=0&k=20&c=pEbBdxBmNI0TZhnK7XIBd9i2Nl90tOnBkuoxxfz4mG4=" alt="" className='w-full h-full object-cover' />
+                        <img src={stats?.institution_data?.institution_logo || buildingImage} alt="" className='w-full h-full object-cover' />
                     </div>
                 </div>
 
@@ -174,11 +177,11 @@ const InstDashboard = () => {
                             
                             return (
                                 <tr key={index} className='border-b-2 border-gray-300'>                        
-                                    <td className='text-left py-2 px-3 font-medium text-gray-700'>{tr.student_name}</td>
-                                    <td className='text-left font-medium text-gray-700'>{tr.course_name}</td>
-                                    <td className='text-left font-medium text-gray-700'>{tr.issue_date.split("T")[0]}</td>
-                                    <td className='text-left font-medium text-gray-700'>{tr.expiry_date.split("T")[0]}</td>
-                                    <td className={`text-left font-medium ${tr.status == "expired" || tr.status == "revoked" ? 'text-red-700' : 'text-green-600'}`}>{tr.status.charAt(0).toUpperCase() + tr.status.slice(1)}</td>                        
+                                    <td className='text-left text-sm md:text-base py-2 px-3 font-medium text-gray-700'>{tr.student_name}</td>
+                                    <td className='text-left text-sm md:text-base font-medium text-gray-700'>{tr.course_name}</td>
+                                    <td className='text-left text-sm md:text-base font-medium text-gray-700'>{tr.issue_date.split("T")[0]}</td>
+                                    <td className='text-left text-sm md:text-base font-medium text-gray-700'>{tr.expiry_date.split("T")[0]}</td>
+                                    <td className={`text-left text-sm md:text-base font-medium ${tr.status == "expired" || tr.status == "revoked" ? 'text-red-700' : 'text-green-600'}`}>{tr.status.charAt(0).toUpperCase() + tr.status.slice(1)}</td>                        
                                 </tr>
                             )
                         })}

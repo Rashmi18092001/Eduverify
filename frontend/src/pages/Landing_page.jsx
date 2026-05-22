@@ -15,7 +15,8 @@ const Landing_page = () => {
   
           const fetchProfile = async() => {
               try {
-                  const response = await fetch('http://localhost:3000/v1/auth/profile', {
+                  // const response = await fetch('http://localhost:3000/v1/auth/profile', {
+                  const response = await fetch('https://eduverify.onrender.com/v1/auth/profile', {
                       method: 'GET',
                       credentials: 'include'
                   })

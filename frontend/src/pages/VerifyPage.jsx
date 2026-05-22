@@ -55,8 +55,8 @@ const status =
    useEffect(()=>{
         const verify = async ()=> {
             try {
-                const response = await fetch(`http://192.168.100.103:3000/v1/verify/verify_certificate?certificate_id=${certificate_id}`)
-
+                // const response = await fetch(`http://192.168.100.103:3000/v1/verify/verify_certificate?certificate_id=${certificate_id}`)
+                const response = await fetch(`https://eduverify.onrender.com/v1/verify/verify_certificate?certificate_id=${certificate_id}`)
                 const data = await response.json()
                 if(data.status){
                     setCertificate(data.data)

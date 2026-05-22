@@ -3,6 +3,7 @@ import SidebarTab from '../components/SidebarTab';
 import { Menu } from 'lucide-react';
 import Page_name from '../components/Page_name';
 import Logo from '../components/Logo';
+import buildingImage from '../images/building.png'
 
 const InstProfile = () => {
   const [open, setOpen] = useState(false);
@@ -15,7 +16,8 @@ const InstProfile = () => {
     const fetchDetails = async() => {
       try {
 
-        const response = await fetch('http://localhost:3000/v1/institution/fetch_institution', {
+        // const response = await fetch('http://localhost:3000/v1/institution/fetch_institution', {
+        const response = await fetch('https://eduverify.onrender.com/v1/institution/fetch_institution', {
           credentials: 'include',
           method: 'GET'
         })
@@ -73,7 +75,8 @@ const InstProfile = () => {
       {console.log('formData of update', formData);
       }
 
-      const response = await fetch('http://localhost:3000/v1/institution/edit_institution', {
+      // const response = await fetch('http://localhost:3000/v1/institution/edit_institution', {
+      const response = await fetch('https://eduverify.onrender.com/v1/institution/edit_institution', {
         headers: {
           'Content-Type': 'application/json'
         },
@@ -147,7 +150,7 @@ const InstProfile = () => {
               {/* Logo Preview */}
               <img
                 src={
-                  formData?.institution_logo || "" 
+                  formData?.institution_logo || buildingImage 
                 }
                 alt="Institution Logo"
                 className='w-24 h-24 object-cover rounded-full border-2 border-gray-300'

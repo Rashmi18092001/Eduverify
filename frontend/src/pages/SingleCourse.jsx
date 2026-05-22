@@ -32,7 +32,8 @@ const UpdateCourse = () => {
   const handleSave = async() => {
     try {
 
-      const response = await fetch(`http://localhost:3000/v1/course/edit_course?course_id=${course_id}`, {
+      // const response = await fetch(`http://localhost:3000/v1/course/edit_course?course_id=${course_id}`, {
+      const response = await fetch(`https://eduverify.onrender.com/v1/course/edit_course?course_id=${course_id}`, {
         headers: {
           'Content-Type': 'application/json'
         },
@@ -59,7 +60,8 @@ const UpdateCourse = () => {
     const fetchData = async()=>{
       try {
 
-        const response = await fetch(`http://localhost:3000/v1/course/fetch_single_course?course_id=${course_id}`, {
+        // const response = await fetch(`http://localhost:3000/v1/course/fetch_single_course?course_id=${course_id}`, {
+        const response = await fetch(`https://eduverify.onrender.com/v1/course/fetch_single_course?course_id=${course_id}`, {
           credentials: 'include',
           method: 'GET'
         })

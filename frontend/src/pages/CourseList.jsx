@@ -24,7 +24,7 @@ const CourseList = () => {
 
         const fetchList = async() => {
 
-            const response = await fetch('http://localhost:3000/v1/course/fetch_all_course', {
+            const response = await fetch('https://eduverify.onrender.com/v1/course/fetch_all_course', {
                 credentials: 'include',
                 method: 'GET'
             })
