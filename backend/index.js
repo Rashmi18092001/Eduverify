@@ -12,8 +12,8 @@ const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require('./swagger');
 const cookieParser = require('cookie-parser');
 // const puppeteer = require("puppeteer");
-// const puppeteer = require("puppeteer-core");
-// const chromium = require("@sparticuz/chromium");
+const puppeteer = require("puppeteer-core");
+const chromium = require("@sparticuz/chromium");
 
 connectDB()
 
@@ -78,7 +78,7 @@ cron.schedule("0 0 * * *", async () => {
     }
 });
 
-// global.browserInstance = null
+global.browserInstance = null
 
 // const startBrowser = async () => {
 
@@ -91,34 +91,34 @@ cron.schedule("0 0 * * *", async () => {
 //     console.log("Puppeteer browser started");
 // };
 
-// const startBrowser = async () => {
+const startBrowser = async () => {
 
-//     // global.browserInstance = await puppeteer.launch({
-//     //     args: chromium.args,
-//     //     executablePath: await chromium.executablePath(),
-//     //     headless: true,
-//     // });
-//     global.browserInstance = await puppeteer.launch({
-//                 executablePath: await chromium.executablePath(),
+    // global.browserInstance = await puppeteer.launch({
+    //     args: chromium.args,
+    //     executablePath: await chromium.executablePath(),
+    //     headless: true,
+    // });
+    global.browserInstance = await puppeteer.launch({
+                executablePath: await chromium.executablePath(),
 
-//                 headless: true,
+                headless: true,
 
-//                 args: [
-//                     ...chromium.args,
-//                     "--no-sandbox",
-//                     "--disable-setuid-sandbox",
-//                     "--disable-dev-shm-usage",
-//                     "--single-process",
-//                     "--no-zygote",
-//                 ],
-//             });
+                args: [
+                    ...chromium.args,
+                    "--no-sandbox",
+                    "--disable-setuid-sandbox",
+                    "--disable-dev-shm-usage",
+                    "--single-process",
+                    "--no-zygote",
+                ],
+            });
 
-//     console.log("Puppeteer browser started");
-// };
+    console.log("Puppeteer browser started");
+};
 
 const startServer = async () => {
 
-    // await startBrowser()
+    await startBrowser()
 
     app.listen(3000, "0.0.0.0", () => {
         console.log('server is listening on port 3000')
