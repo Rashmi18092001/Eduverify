@@ -128,7 +128,8 @@ exports.login = async (req, res) => {
 
       const options = {
         httpOnly: true, // true means only server can perfrom
-        secure: true //true means can be modified from frontend or server
+        secure: true, //true means can be modified from frontend or server
+        sameSite: "None"
       }
 
       return res
@@ -160,7 +161,8 @@ exports.logout = async(req, res) => {
 
   const options = {
     httpOnly: true, // true means only server can perfrom
-    secure: true //true means can be modified from frontend or server
+    secure: true, //true means can be modified from frontend or server
+    sameSite: "None"
   }
 
   return res
