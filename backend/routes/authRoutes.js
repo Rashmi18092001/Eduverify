@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const auth = require('../services/jwt');
+// const auth = require('../services/jwt');
+const auth = require('../middlewares/authMiddleware')
 const { register, login, logout, refresh_token, profile} = require('../controllers/authController');
 const {upload} = require('../middlewares/multerMiddleware')
 

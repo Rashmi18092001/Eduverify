@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const auth = require('../services/jwt');
+// const auth = require('../services/jwt');
+const auth = require('../middlewares/authMiddleware')
 const { addAdmin, loginAdmin, editAdmin, fetchAllInstitutions, fetchSingleInstitution, fetchStudentByInstitution, deleteInstitution} = require('../controllers/adminController');
 
 router.post('/add_admin', addAdmin);

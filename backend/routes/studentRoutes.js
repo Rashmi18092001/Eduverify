@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const auth = require('../services/jwt');
+// const auth = require('../services/jwt');
+const auth = require('../middlewares/authMiddleware')
 const { addStudent, fetchSingleStudent, fetchStudent, editStudent, deleteStudent, revokeStudent, fetchStudentBySearch, fetchCertificates , fetchOwnCertificates, changePassword} = require('../controllers/studentController');
 const {upload} = require('../middlewares/multerMiddleware')
 

@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const auth = require('../services/jwt');
+// const auth = require('../services/jwt');
+const auth = require('../middlewares/authMiddleware')
 const { addCourse, fetchAllCourse, fetchSingleCourse, editCourse, deleteCourse} = require('../controllers/courseController');
  
 
