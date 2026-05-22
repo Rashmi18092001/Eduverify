@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const auth = require('../services/jwt');
+// const auth = require('../services/jwt');
 const { editInstitution, InstStats, fetchInstitutionCertificates, issueCertificate, fetchInstitution, revokeCertificate} = require('../controllers/institutionController');
-// const authMiddleware = require('../middlewares/authMiddleware')
+const auth = require('../middlewares/authMiddleware')
 const {upload} = require('../middlewares/multerMiddleware')
 
 router.put('/edit_institution', upload.fields([{name: 'profile_picture', maxCount: 1}]), auth, editInstitution);
