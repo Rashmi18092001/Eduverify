@@ -12,7 +12,7 @@ const authMiddleware = (req, res, next) => {
     // const token = authHeader.split(" ")[1];
     const token = req.cookies.accessToken
     if(!token){
-        res.send({status: false, message: "No token"})
+        return res.send({status: false, message: "No token"})
     }
 
     try {
@@ -23,3 +23,5 @@ const authMiddleware = (req, res, next) => {
         return res.send({ status: false, message: "Invalid token" });
     }
 }
+
+module.exports = authMiddleware;
