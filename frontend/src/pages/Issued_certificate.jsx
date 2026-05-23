@@ -24,7 +24,10 @@ const Issued_certificate = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [search, setSearch] = useState(student_name || "");
   const [selectStudentId, setSelectStudentId] = useState(student_id);
-
+  const [showFilter, setShowFilter] = useState(false);
+  const [selectedStatus, setSelectedStatus] = useState("all");
+  const [selectedLabel, setSelectedLabel] = useState("Filter");
+    
 
   useEffect(()=>{
     const fetchData = async() => {
@@ -34,19 +37,20 @@ const Issued_certificate = () => {
             let url = `https://eduverify.onrender.com/v1/institution/fetch_institution_certificates?page=${page}`;
             if(selectStudentId){
                 url += `&student_id=${selectStudentId}`
-            } else if(search){
+            } 
+            if(search){
                 url += `&search=${search}`
             }
-            console.log('urll', url);
-            
+            if(selectedStatus){
+                url += `&status=${selectedStatus}`
+            }
             const response = await fetch(url, {
                 credentials: 'include',
                 method: 'GET'
             })
 
             let data = await response.json();
-            console.log('data', data);
-            
+           
             if(data.status){
                 setData(data.data)
                 setTotalPages(data.total_pages)
@@ -58,9 +62,9 @@ const Issued_certificate = () => {
         }
     }
     fetchData()
-  }, [page, search, selectStudentId])
+  }, [page, search, selectStudentId, selectedStatus])
 
-   const handleDownload = async(fileurl, name) => {
+  const handleDownload = async(fileurl, name) => {
     const response = await fetch(fileurl);
     const blob = await response.blob();
     const url = window.URL.createObjectURL(blob);
@@ -74,6 +78,16 @@ const Issued_certificate = () => {
     a.remove();
     window.URL.revokeObjectURL(url)
   }
+
+    const handleFilter = async (status) => {
+        setSelectedStatus(status);
+
+        if (status) {
+            setSelectedLabel(status.charAt(0).toUpperCase() + status.slice(1));
+        } else {
+            setSelectedLabel("Filter");
+        }
+    };
 
 //   const table = [
 //         {no:1, stud_name: "John Smith", name: "Web Development", issue_date: "4 May 2024", expiry_date: "3 May 2025", status: "Active"},
@@ -142,11 +156,77 @@ const Issued_certificate = () => {
                             }}
                         />
                     </div>
-                    <div>
-                        <div className='flex items-center border-2 border-gray-300 rounded  px-2 gap-2 py-1 text-sm md:text-base '>
-                            <div><Funnel size={16} /></div>
-                            <div className='text-gray-700 font-semibold'>Filter</div>
+                    <div className="relative inline-block ">
+                        <div  onClick={() => setShowFilter(!showFilter)} className={`flex items-center border-2 border-gray-300 rounded px-2 gap-2 py-1 text-sm md:text-base cursor-pointer ${selectedLabel === "Filter"
+                            ? "bg-transparent text-black"
+                            : "bg-gray-700 text-white"}`}>
+                            {
+                                selectedLabel === "Filter" ? (
+                                    <div className="flex items-center gap-2">
+                                        <Funnel size={16} />
+                                        <span className="text-gray-700 font-semibold">
+                                        Filter
+                                        </span>
+                                    </div>
+                                ) : (
+                                    <span className={`w-18 text-center font-semibold ${selectedLabel === "Filter"
+                                        ? "text-gray-700"
+                                        : "text-white"
+                                    }} `}>
+                                        {selectedLabel}
+                                    </span>
+                                )
+                            }
+                            {/* <div>
+                                <Funnel size={16} />
+                            </div>
+                            <div className='text-gray-700 font-semibold'>Filter</div> */}
                         </div>
+
+                        {showFilter && (
+                            <div className="absolute mt-2 w-20 md:w-25 bg-white border border-gray-200 rounded shadow-lg z-10">
+                            <div
+                                onClick={() => handleFilter("all")}
+                                className={`md:px-4 md:py-2 py-1 px-2 cursor-pointer hover:bg-gray-100 ${
+                                selectedStatus === "all" ? "bg-gray-100 font-semibold" : ""
+                                }`}
+                            >
+                                All
+                            </div>
+
+                            <div
+                                onClick={() => handleFilter("active")}
+                                className={`md:px-4 md:py-2 py-1 px-2 cursor-pointer hover:bg-gray-100 ${
+                                selectedStatus === "active"
+                                    ? "bg-gray-100 font-semibold"
+                                    : ""
+                                }`}
+                            >
+                                Active
+                            </div>
+
+                            <div
+                                onClick={() => handleFilter("revoked")}
+                                className={`md:px-4 md:py-2 py-1 px-2 cursor-pointer hover:bg-gray-100 ${
+                                selectedStatus === "revoked"
+                                    ? "bg-gray-100 font-semibold"
+                                    : ""
+                                }`}
+                            >
+                                Revoked
+                            </div>
+                            <div
+                                onClick={() => handleFilter("expired")}
+                                className={`md:px-4 md:py-2 py-1 px-2 cursor-pointer hover:bg-gray-100 ${
+                                selectedStatus === "expired"
+                                    ? "bg-gray-100 font-semibold"
+                                    : ""
+                                }`}
+                            >
+                                Expired
+                            </div>
+                            </div>
+                        )}
                         
                     </div>
             </div>
