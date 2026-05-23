@@ -215,16 +215,14 @@ exports.InstStats = async (req, res) => {
 }
 
 exports.fetchInstitutionCertificates = async(req, res) => {
-    console.log('fetchInstitutionCertificates');
+    console.log('fetchInstitutionCertificates', req.query);
     let db = getDB()
     
     try {
         let user_data = req.user;
         let user_id = user_data.id
-        // console.log('user id', user_id);
 
-        let {search} = req.query;
-        let {student_id} = req.query;
+        let {student_id, status, search} = req.query;
         let {page} = req.query || 1;
         let limit = 10;
         let skip = (Number(page)-1) * limit;
@@ -234,6 +232,9 @@ exports.fetchInstitutionCertificates = async(req, res) => {
 
         if(student_id){
             query.student_id = student_id
+        }
+        if(status && status !== "all"){
+            query.status = status
         }
 
         let inst_data = await db.collection('institution').findOne({user_id: user_id});
@@ -258,6 +259,9 @@ exports.fetchInstitutionCertificates = async(req, res) => {
             }
             
             let total_records = await db.collection('certificates').count(query);
+            console.log('total_records', total_records);
+            console.log('query', query);
+            
             let total_pages = Math.ceil(total_records/limit);
             let certificates = await db.collection('certificates').find(query).sort({_id: -1}).skip(skip).limit(limit).toArray();
 
@@ -274,7 +278,7 @@ exports.fetchInstitutionCertificates = async(req, res) => {
                         let student_id = certificate.student_id
                         let student_data = await db.collection("students").findOne({_id: new ObjectId(student_id)})
                         if(student_data){
-                            console.log('student_data', student_data);
+                            // console.log('student_data', student_data);
                             
                             certificate.student_name = student_data.name
                             certificate.profile_picture = student_data.profile_picture
@@ -323,9 +327,9 @@ exports.issueCertificate = async(req, res) => {
         // end_date = end_date.toISOString();
 
         let existing = await db.collection('certificates').find({institution_id: inst_id, student_id, course_id}).toArray();
-        // if(existing.length > 0){
-        //     return res.send({status: false, message: "Certificate already issued"})
-        // }
+        if(existing.length > 0){
+            return res.send({status: false, message: "Certificate already issued"})
+        }
 
         let certificate_inserted = await db.collection('certificates').insertOne({institution_id: inst_id, student_id, course_id, issue_date, expiry_date, status: "active",  qr_image: "", added_date: new Date() })
 
