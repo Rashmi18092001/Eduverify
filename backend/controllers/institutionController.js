@@ -375,7 +375,10 @@ exports.issueCertificate = async(req, res) => {
         return res.send({status: true, message: "Certificate issued successfully", id: cert_id.toString()})
         
     } catch (error) {
-        console.log('error', error);
+        // console.log('error', error);
+        console.error("ISSUE CERTIFICATE ERROR:");
+        console.error(error);
+        console.error(error.stack);
         return res.send({status: false, message: 'Internal server error'})       
     }
 }
