@@ -345,8 +345,9 @@ exports.issueCertificate = async(req, res) => {
 
         const qrData = `https://eduverify-verification.netlify.app/verify_certificate/${cert_id}`;
 
-        if (!fs.existsSync(qrPath))
-            fs.mkdirSync(qrPath);              
+        if (!fs.existsSync(qrPath)) {
+            fs.mkdirSync(qrPath, { recursive: true });
+        }             
 
         const qrFileName = `qr_${cert_id}.png`;
         const qrFilePath = path.join(__dirname, qrPath, qrFileName);
