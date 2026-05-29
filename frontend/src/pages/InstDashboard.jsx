@@ -33,8 +33,8 @@ const InstDashboard = () => {
         const fetchStats = async() => {
             try {
                 
-                // const response = await fetch('http://localhost:3000/v1/institution/stats',  {
-                const response = await fetch('https://eduverify.onrender.com/v1/institution/stats',  {
+                const response = await fetch('http://localhost:3000/v1/institution/stats',  {
+                // const response = await fetch('https://eduverify.onrender.com/v1/institution/stats',  {
                     credentials: 'include',
                 })
                 // console.log('response', response);
@@ -104,7 +104,6 @@ const InstDashboard = () => {
                 
                 <div className='flex justify-end md:justify-between md:gap-6 gap-2 items-center md:order-2 order-2 '>
                     <span className='border-2 border-gray-400 py-1 px-4 rounded text-gray-700 text-sm font-semibold'>{stats?.institution_data?.institutionName}</span>
-                    <Bell size={25} color="#5a5858" />
                     {/* profile */}
                     <div className='w-10 h-10 rounded-full border-2 bg-blue-900 overflow-hidden'>
                         <img src={stats?.institution_data?.institution_logo || buildingImage} alt="" className='w-full h-full object-cover' />

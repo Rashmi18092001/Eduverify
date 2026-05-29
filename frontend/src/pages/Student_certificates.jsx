@@ -140,8 +140,8 @@ const Student_certificates = () => {
                                                 <td className={`text-left text-sm md:text-base py-2 px-3 font-medium ${tr.status == "expired" || tr.status == "revoked" ? 'text-red-700' : 'text-green-600'}`}>{tr.status.charAt(0).toUpperCase() + tr.status.slice(1)}</td>       
                                                 <td className='py-2 px-3 '>
                                                     <div className='flex gap-5'>
-                                                        <div className='cursor-pointer' onClick={()=>{window.open(tr.pdf_url, "_blank")}}><Eye size={16} color="#19a5e1" /></div>
-                                                        <div onClick={()=>{handleDownload(tr.pdf_url, tr.pdf)}} className='cursor-pointer'>
+                                                        <div className='cursor-pointer' onClick={()=>{window.open(tr.certificate_url, "_blank")}}><Eye size={16} color="#19a5e1" /></div>
+                                                        <div onClick={()=>{handleDownload(tr.certificate_url, tr.certificate_image)}} className='cursor-pointer'>
                                                             <Download size={16} color="#0d5caf" />
                                                         </div>
                                                     </div>  
