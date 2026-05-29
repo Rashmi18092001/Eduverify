@@ -21,7 +21,7 @@ app.use(cors({
     origin: [
         "http://localhost:5173",
         "http://192.168.100.103:5173",
-        "https://incandescent-hamster-29e356.netlify.app"
+        " https://eduverify-verification.netlify.app"
     ],
     credentials: true
 }))
