@@ -33,8 +33,8 @@ const InstDashboard = () => {
         const fetchStats = async() => {
             try {
                 
-                const response = await fetch('http://localhost:3000/v1/institution/stats',  {
-                // const response = await fetch('https://eduverify.onrender.com/v1/institution/stats',  {
+                // const response = await fetch('http://localhost:3000/v1/institution/stats',  {
+                const response = await fetch('https://eduverify.onrender.com/v1/institution/stats',  {
                     credentials: 'include',
                 })
                 // console.log('response', response);
