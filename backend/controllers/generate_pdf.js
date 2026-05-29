@@ -9,7 +9,7 @@ let logoUrl = process.env.LOGO_URL;
 let pdfUrl = process.env.PDF_URL;
 let qrUrl = process.env.QR_URL;
 
-async function generatePDF(htmlContent, outputPath) {
+async function generateCertificate(htmlContent, outputPath) {
   const browser = global.browserInstance
 
   console.log('browser-----------', browser);
@@ -104,28 +104,26 @@ exports.generate_pdf = async (req, res) => {
     let image_name = `${new_student_name}_${randomNumber}-certificate.png`
     const outputFile = path.join(generatedFolder, image_name);
 
-    await generatePDF(html, outputFile); 
-    const imgUpload = await uploadOnCloudinary(
-      outputFile
-    );
+    await generateCertificate(html, outputFile); 
+    const imgUpload = await uploadOnCloudinary(outputFile);
 
     if (!imgUpload) {
       return res.send({
         status: false,
-        message: "PDF upload failed"
+        message: "Certificate image upload failed"
       });
     }
 
     console.log('imgUpload', imgUpload);
     
-    await db.collection("certificates").updateOne({_id: new ObjectId(certificate_id)}, {$set: {certificate_image: image_name, certificate_url: pdfUpload.secure_url}})
+    await db.collection("certificates").updateOne({_id: new ObjectId(certificate_id)}, {$set: {certificate_image: image_name, certificate_url: imgUpload.secure_url}})
     console.log('-------------------pdf generated------------------');
     
-    return res.send({ status: true, message: "PDF generated successfully", certificate_url: imgUpload.secure_url  })
+    return res.send({ status: true, message: "Certificate generated successfully", certificate_url: imgUpload.secure_url  })
 
   } catch (err) {
     // console.log("error", err);
-    console.error("generate pdf ERROR:");
+    console.error("generate certificate ERROR:");
     console.error(error);
     console.error(error.stack);
     return res.send({ status: false, message: "Internal server error" });
