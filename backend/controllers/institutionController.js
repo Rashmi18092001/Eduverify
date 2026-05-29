@@ -350,8 +350,9 @@ exports.issueCertificate = async(req, res) => {
         }             
 
         const qrFileName = `qr_${cert_id}.png`;
-        const qrFilePath = path.join(__dirname, qrPath, qrFileName);
-
+        const qrFilePath = path.join(qrPath, qrFileName);
+        console.log('qrFilePath', qrFilePath);
+        
 
         await QRCode.toFile(qrFilePath, qrData, {
             errorCorrectionLevel: 'H',
