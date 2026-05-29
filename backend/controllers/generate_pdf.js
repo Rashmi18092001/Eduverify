@@ -23,11 +23,10 @@ async function generatePDF(htmlContent, outputPath) {
       timeout: 0
   })
   
-  await page.pdf({
-    path: outputPath,  
-    format: "A4",
-    printBackground: true,
-    margin: { top: "20px", bottom: "20px" }
+  await page.screenshot({
+    path: outputPath,
+    fullPage: true,
+    type: 'png'
   });
 
   await page.close();
@@ -102,27 +101,27 @@ exports.generate_pdf = async (req, res) => {
 
     const randomNumber = [...Array(6)].reduce((a, _) => a + '0123456789'[~~(Math.random() * 10)], '');
     let new_student_name = student_name.replace(/ /g, '_')
-    let pdf_name = `${new_student_name}_${randomNumber}-certificate.jpg`
-    const outputFile = path.join(generatedFolder, pdf_name);
+    let image_name = `${new_student_name}_${randomNumber}-certificate.png`
+    const outputFile = path.join(generatedFolder, image_name);
 
     await generatePDF(html, outputFile); 
-    const pdfUpload = await uploadOnCloudinary(
+    const imgUpload = await uploadOnCloudinary(
       outputFile
     );
 
-    if (!pdfUpload) {
+    if (!imgUpload) {
       return res.send({
         status: false,
         message: "PDF upload failed"
       });
     }
 
-    console.log('pdfUpload', pdfUpload);
+    console.log('imgUpload', imgUpload);
     
-    await db.collection("certificates").updateOne({_id: new ObjectId(certificate_id)}, {$set: {pdf: pdf_name, pdf_url: pdfUpload.secure_url}})
+    await db.collection("certificates").updateOne({_id: new ObjectId(certificate_id)}, {$set: {certificate_image: image_name, certificate_url: pdfUpload.secure_url}})
     console.log('-------------------pdf generated------------------');
     
-    return res.send({ status: true, message: "PDF generated successfully", pdf_url: pdfUpload.secure_url  })
+    return res.send({ status: true, message: "PDF generated successfully", certificate_url: imgUpload.secure_url  })
 
   } catch (err) {
     console.log("error", err);
