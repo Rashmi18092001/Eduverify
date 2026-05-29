@@ -343,7 +343,7 @@ exports.issueCertificate = async(req, res) => {
         //     certificate_id: `http://localhost:5173/verify_certificate/${cert_id}`
         // });
 
-        const qrData = `http://192.168.100.103:5173/verify_certificate/${cert_id}`;
+        const qrData = `https://eduverify-verification.netlify.app/verify_certificate/${cert_id}`;
 
         if (!fs.existsSync(qrPath))
             fs.mkdirSync(qrPath);              
