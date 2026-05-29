@@ -124,7 +124,10 @@ exports.generate_pdf = async (req, res) => {
     return res.send({ status: true, message: "PDF generated successfully", certificate_url: imgUpload.secure_url  })
 
   } catch (err) {
-    console.log("error", err);
+    // console.log("error", err);
+    console.error("generate pdf ERROR:");
+    console.error(error);
+    console.error(error.stack);
     return res.send({ status: false, message: "Internal server error" });
   }
 };
